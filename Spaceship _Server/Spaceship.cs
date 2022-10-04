@@ -10,54 +10,55 @@ namespace Spaceship__Server
     public interface IMovable : IEntity
     {
         double[] Speed { get; set; }
-        public void Move();
     }
 
-    public class Speacship : IMovable
+    public class MovablesHandler
+    {
+        public void Move(object obj)
+        {
+                if (obj is IMovable movable)
+                {
+                    for (int i = 0; i < movable.Position.Length; i++)
+                    {
+                        movable.Position[i] += movable.Speed[i];
+                    }
+                }
+                else
+                {
+                    throw(new Exception());
+                }
+        }
+    }
+
+    public class Planet 
+    {
+        public double[] Position { set; get; }
+
+        public Planet()
+        {
+            Position = new double[] { 0, 0, 0 };
+        }
+        public Planet(double[] pos)
+        {
+            Position = pos;
+        }
+    }
+
+    public class Spaceship : IMovable
     {
         public double[] Speed { set; get; }
 
         public double[] Position { set; get; }
-        public void Move()
+
+        public Spaceship()
         {
-            try
-            {
-                if (Speed.Length != Position.Length)
-                {
-                    throw new Exception("Неверный формат вектора скорости.") ;
-                }
-            }
-            catch(Exception)
-            {
-                Console.WriteLine("Не полетели...");
-            }
-            try
-            {
-                var temp = Position;
-            }
-            catch(Exception)
-            {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно прочитать положение объекта в пространстве.");
-            }
-            try
-            {
-                var temp = Speed;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно прочитать значение мгновенной скорости.");
-            }
-            try
-            {
-                for (var i = 0; i < Position.Length; i++)
-                {
-                    Position[i] += Speed[i];
-                }
-            }
-            catch(Exception)
-            {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно изменить положение в пространстве.");
-            }
+            Speed = new double[] {0, 0, 0 };
+            Position = new double[] { 0, 0, 0 };
+        }
+        public Spaceship(double[] spd, double[] pos)
+        {
+            Speed = spd;
+            Position = pos;
         }
     }
 }
