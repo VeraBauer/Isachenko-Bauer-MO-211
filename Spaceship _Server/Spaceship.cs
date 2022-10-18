@@ -1,63 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
+
 
 namespace Spaceship__Server
 {
-    public interface IEntity
+    public interface IMovable
     {
-        double[] Position { get; set; }
+        List<int> Speed { get;}
+        List<int> Position { get; set; }
     }
 
-    public interface IMovable : IEntity
+    public interface ICommand
     {
-        double[] Speed { get; set; }
-        public void Move();
+        public void Execute();
     }
 
-    public class Speacship : IMovable
+    public class MoveCommand : ICommand
     {
-        public double[] Speed { set; get; }
-
-        public double[] Position { set; get; }
-        public void Move()
+        IMovable _obj;
+        public MoveCommand(IMovable obj)
         {
-            try
-            {
-                if (Speed.Length != Position.Length)
-                {
-                    throw new Exception("Неверный формат вектора скорости.") ;
-                }
-            }
-            catch(Exception)
-            {
-                Console.WriteLine("Не полетели...");
-            }
-            try
-            {
-                var temp = Position;
-            }
-            catch(Exception)
-            {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно прочитать положение объекта в пространстве.");
-            }
-            try
-            {
-                var temp = Speed;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно прочитать значение мгновенной скорости.");
-            }
-            try
-            {
-                for (var i = 0; i < Position.Length; i++)
-                {
-                    Position[i] += Speed[i];
-                }
-            }
-            catch(Exception)
-            {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно изменить положение в пространстве.");
-            }
+            _obj = obj;
         }
+
+        public void Execute()
+        {
+            if (_obj.Speed.Count != _obj.Position.Count)
+            {
+                throw new Exception();
+            }
+            List<int> newpos = _obj.Position;
+            for (int i = 0; i < _obj.Position.Count; i++)
+            {
+                newpos[i] += _obj.Speed[i];
+            }
+            _obj.Position = newpos;
+        }
+
     }
 }
