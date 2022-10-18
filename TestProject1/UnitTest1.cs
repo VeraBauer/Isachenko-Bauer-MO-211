@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spaceship__Server;
 using System;
+using System.Collections.Generic;
 
 namespace TestProject1
 {
@@ -12,7 +13,7 @@ namespace TestProject1
         public void EntityCreation_Test()
         {
             //arrange
-            Spaceship TestUnit = new Spaceship(new double[] { 12, 5, 0 }, new double[] { -7, 3, 0 });
+            Spaceship TestUnit = new Spaceship(new List<int> { 12, 5, 0 }, new List<int> { -7, 3, 0 });
             //act
             MovablesHandler MH = new MovablesHandler();
             //assert
@@ -20,7 +21,7 @@ namespace TestProject1
 
             MH.Move(TestUnit);
 
-            double[] actual = TestUnit.Position;
+            List<int> actual = TestUnit.Position;
 
             for (var i = 0; i < 3; i++)
             {
@@ -29,21 +30,48 @@ namespace TestProject1
 
         }
     }
+
+    [TestClass]
+    public class Move_Test
+    {
+
+        [TestMethod]
+        public void MoveCommand_Test()
+        {
+            //arrange
+            Spaceship TestUnit = new Spaceship(new List<int> { 12, 5, 0 }, new List<int> { -7, 3, 0 });
+            //act
+            MoveCommand mc = new MoveCommand(TestUnit);
+            //assert
+            List<int> expected = new List<int> { 5, 8, 0 };
+
+            mc.Execute();
+
+            List<int> actual = TestUnit.Position;
+
+            for (var i = 0; i < 3; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
+
+        }
+    }
+
     [TestClass]
     public class UnknownPosition_Test
     {
         public class SpaceshipT 
         {
-            public double[] Speed { set; get; }
+            public List<int> Speed { set; get; }
 
-            private double[] Position;
+            private List<int> Position;
 
             public SpaceshipT()
             {
-                Speed = new double[] { 0, 0, 0 };
-                Position = new double[] { 0, 0, 0 };
+                Speed = new List<int> { 0, 0, 0 };
+                Position = new List<int> { 0, 0, 0 };
             }
-            public SpaceshipT(double[] spd, double[] pos)
+            public SpaceshipT(List<int> spd, List<int> pos)
             {
                 Speed = spd;
                 Position = pos;
@@ -54,11 +82,11 @@ namespace TestProject1
         {
 
             //arrange
-            SpaceshipT TestUnit = new SpaceshipT(new double[] { 12, 5, 0 }, new double[] { -7, 3, 0 });
+            SpaceshipT TestUnit = new SpaceshipT(new List<int> { 12, 5, 0 }, new List<int> { -7, 3, 0 });
             //act
             MovablesHandler MH = new MovablesHandler();
             //assert
-            double[] expected = new double[] { 5, 8, 0 };
+            List<int> expected = new List<int> { 5, 8, 0 };
 
             Assert.ThrowsException<Exception>(() => MH.Move(TestUnit));
         }
@@ -68,16 +96,16 @@ namespace TestProject1
     {
         public class SpaceshipT
         {
-            private double[] Speed;
+            private List<int> Speed;
 
-            public double[] Position { set; get; }
+            public List<int> Position { set; get; }
 
             public SpaceshipT()
             {
-                Speed = new double[] { 0, 0, 0 };
-                Position = new double[] { 0, 0, 0 };
+                Speed = new List<int> { 0, 0, 0 };
+                Position = new List<int> { 0, 0, 0 };
             }
-            public SpaceshipT(double[] spd, double[] pos)
+            public SpaceshipT(List<int> spd, List<int> pos)
             {
                 Speed = spd;
                 Position = pos;
@@ -88,11 +116,11 @@ namespace TestProject1
         {
 
             //arrange
-            SpaceshipT TestUnit = new SpaceshipT(new double[] { 12, 5, 0 }, new double[] { -7, 3, 0 });
+            SpaceshipT TestUnit = new SpaceshipT(new List<int> { 12, 5, 0 }, new List<int> { -7, 3, 0 });
             //act
             MovablesHandler MH = new MovablesHandler();
             //assert
-            double[] expected = new double[] { 5, 8, 0 };
+            List<int> expected = new List<int> { 5, 8, 0 };
 
             Assert.ThrowsException<Exception>(() => MH.Move(TestUnit));
         }
@@ -103,16 +131,16 @@ namespace TestProject1
     {
         public class SpaceshipT
         {
-            public double[] Speed { set; get; }
+            public List<int> Speed { set; get; }
 
-            public double[] Position { get; }
+            public List<int> Position { get; }
 
             public SpaceshipT()
             {
-                Speed = new double[] { 0, 0, 0 };
-                Position = new double[] { 0, 0, 0 };
+                Speed = new List<int> { 0, 0, 0 };
+                Position = new List<int> { 0, 0, 0 };
             }
-            public SpaceshipT(double[] spd, double[] pos)
+            public SpaceshipT(List<int> spd, List<int> pos)
             {
                 Speed = spd;
                 Position = pos;
@@ -123,11 +151,11 @@ namespace TestProject1
         {
 
             //arrange
-            SpaceshipT TestUnit = new SpaceshipT(new double[] { 12, 5, 0 }, new double[] { -7, 3, 0 });
+            SpaceshipT TestUnit = new SpaceshipT(new List<int> { 12, 5, 0 }, new List<int> { -7, 3, 0 });
             //act
             MovablesHandler MH = new MovablesHandler();
             //assert
-            double[] expected = new double[] { 5, 8, 0 };
+            List<int> expected = new List<int> { 5, 8, 0 };
 
             Assert.ThrowsException<Exception>(() => MH.Move(TestUnit));
         }
@@ -141,11 +169,11 @@ namespace TestProject1
         public void Planet_Test()
         {
             //arrange
-            Planet TestUnit = new Planet(new double[] { 12, 5, 0 });
+            Planet TestUnit = new Planet(new List<int> { 12, 5, 0 });
             //act
             MovablesHandler MH = new MovablesHandler();
             //assert
-            double[] expected = new double[] { 5, 8, 0 };
+            List<int> expected = new List<int> { 5, 8, 0 };
 
             Assert.ThrowsException<Exception>(() => MH.Move(TestUnit));
         }

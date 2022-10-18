@@ -1,64 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
+
 
 namespace Spaceship__Server
 {
-    public interface IEntity
+    public interface IMovable
     {
-        double[] Position { get; set; }
+        List<int> Speed { get;}
+        List<int> Position { get; set; }
     }
 
-    public interface IMovable : IEntity
+    public interface ICommand
     {
-        double[] Speed { get; set; }
+        public void Execute();
     }
 
-    public class MovablesHandler
+    public class MoveCommand : ICommand
     {
-        public void Move(object obj)
+        IMovable _obj;
+        public MoveCommand(IMovable obj)
         {
-                if (obj is IMovable movable)
-                {
-                    for (int i = 0; i < movable.Position.Length; i++)
-                    {
-                        movable.Position[i] += movable.Speed[i];
-                    }
-                }
-                else
-                {
-                    throw(new Exception());
-                }
+            _obj = obj;
         }
-    }
 
-    public class Planet 
-    {
-        public double[] Position { set; get; }
-
-        public Planet()
+        public void Execute()
         {
-            Position = new double[] { 0, 0, 0 };
+            if (_obj.Speed.Count != _obj.Position.Count)
+            {
+                throw new Exception();
+            }
+            List<int> newpos = _obj.Position;
+            for (int i = 0; i < _obj.Position.Count; i++)
+            {
+                newpos[i] += _obj.Speed[i];
+            }
+            _obj.Position = newpos;
         }
-        public Planet(double[] pos)
-        {
-            Position = pos;
-        }
-    }
 
-    public class Spaceship : IMovable
-    {
-        public double[] Speed { set; get; }
-
-        public double[] Position { set; get; }
-
-        public Spaceship()
-        {
-            Speed = new double[] {0, 0, 0 };
-            Position = new double[] { 0, 0, 0 };
-        }
-        public Spaceship(double[] spd, double[] pos)
-        {
-            Speed = spd;
-            Position = pos;
-        }
     }
 }
