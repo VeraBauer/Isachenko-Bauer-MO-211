@@ -20,5 +20,7 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --collect "Code Coverage"
+    - name: Report Generation
+      uses: zyborg/dotnet-tests-report@v1.4.4
     - name: Codecov
       uses: codecov/codecov-action@v1.5.2
