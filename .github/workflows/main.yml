@@ -1,8 +1,7 @@
 name: .Net 6 CI Build
 
 on:
-  push:
-    branches: [ Lab1 ]
+  workflow_dispatch:
   pull_request:
     branches: [ Lab1 ]
 
