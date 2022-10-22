@@ -14,6 +14,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 5.0.x
+    - uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: coverage.cobertura.xml
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
