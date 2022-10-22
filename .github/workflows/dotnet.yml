@@ -19,6 +19,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --logger "console;verbosity=detailed"l
+      run: dotnet test --no-build --logger trx
     - name: Codecov
       uses: codecov/codecov-action@v1.5.2
