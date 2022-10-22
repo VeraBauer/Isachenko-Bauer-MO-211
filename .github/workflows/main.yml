@@ -1,4 +1,4 @@
-name: .Net 6 CI Build
+name: .Net 5 CI Build
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 5.0.0
 
     - name: Restore Dependencies
       run: dotnet restore 
