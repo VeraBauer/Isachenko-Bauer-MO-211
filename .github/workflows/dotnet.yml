@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --collect "Code Coverage"
+      run: dotnet test --no-build --collect "Code Coverage" --results-directory ../
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
