@@ -2,7 +2,10 @@ name: .NET
 
 on:
   workflow_dispatch:
-
+  push:
+    branches: [ Spaceship_Move_Test ]
+  pull_request:
+    branches: [ Spaceship_Move_Test ]
 jobs:
   build:
 
