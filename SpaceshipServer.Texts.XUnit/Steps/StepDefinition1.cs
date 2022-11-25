@@ -14,6 +14,8 @@ namespace SpaceshipServer.Texts.XUnit.Steps
     [Binding]
     public class VectorSteps
     {
+        private int resultCoord = 0;
+        private bool didThrow = false;
         private Vector vector = new Vector();
         private Vector secondVector = new Vector();
         private Vector resultVector = new Vector();
@@ -49,35 +51,7 @@ namespace SpaceshipServer.Texts.XUnit.Steps
         [When(@"Происходит операция сложения")]
         public void SumOperation()
         {
-            this.resultVector = this.vector + this.secondVector;
-        }
-
-        [When(@"Происходит операция вычитания")]
-        public void MinOperation()
-        {
-            this.resultVector = this.vector - this.secondVector;
-        }
-
-        [When(@"Операция вычитания выкидывает исключение")]
-        public void MinOperationException()
-        {
-            bool didThrow = false;
-            try
-            {
-                this.resultVector = this.vector - this.secondVector;
-            }
-            catch (ArgumentException)
-            {
-                didThrow = true;
-            }
-            Assert.True(didThrow);
-        }
-
-
-        [When(@"Операция сложения выкидывает исключение")]
-        public void SumOperationException()
-        {
-            bool didThrow = false;
+            didThrow = false;
             try
             {
                 this.resultVector = this.vector + this.secondVector;
@@ -86,7 +60,20 @@ namespace SpaceshipServer.Texts.XUnit.Steps
             {
                 didThrow = true;
             }
-            Assert.True(didThrow);
+        }
+
+        [When(@"Происходит операция вычитания")]
+        public void MinOperation()
+        {
+            didThrow = false;
+            try
+            {
+                this.resultVector = this.vector - this.secondVector;
+            }
+            catch (ArgumentException)
+            {
+                didThrow = true;
+            }
         }
 
         [When(@"Происходит помещение вектора в строку")]
@@ -99,14 +86,7 @@ namespace SpaceshipServer.Texts.XUnit.Steps
         public void SetCoord(int n1, int n2)
         {
             this.resultVector = this.vector;
-            this.resultVector[n1] = n2;
-        }
-
-        [When(@"Происходит замена (.*)-й координаты на (.*), кидается ArgumentException")]
-        public void SetCoordException(int n1, int n2)
-        {
-            this.resultVector = this.vector;
-            bool didThrow = false;
+            didThrow = false;
             try
             {
                 this.resultVector[n1] = n2;
@@ -115,31 +95,34 @@ namespace SpaceshipServer.Texts.XUnit.Steps
             {
                 didThrow = true;
             }
-            Assert.True(didThrow);
         }
 
-        [Then(@"При получении (.*)-й координаты имеем (.*)")]
-        public void GetCoord(int n1, int n2)
-        {
-            this.resultVector = this.vector;
-            Assert.Equal(this.resultVector[n1], n2);
-        }
-
-        [Then(@"При получении (.*)-й координаты имеем ArgumentException")]
+        [Then(@"Происходит попытка получения (.*)-й координаты")]
         public void GetCoordException(int n1)
         {
             this.resultVector = this.vector;
             int n = 0;
-            bool didThrow = false;
+            didThrow = false;
             try
             {
-                n = this.resultVector[n1];
+                resultCoord = this.resultVector[n1];
             }
             catch (ArgumentException)
             {
                 didThrow = true;
             }
+        }
+
+        [Then(@"Было выброшено исключение")]
+        public void WasEx()
+        {
             Assert.True(didThrow);
+        }
+
+        [Then(@"Координата результата: (.*)")]
+        public void GetCoord(int n1)
+        {
+            Assert.Equal(resultCoord, n1);
         }
 
         [Then(@"Метод GetHashCode работает верно")]
@@ -210,6 +193,7 @@ namespace SpaceshipServer.Texts.XUnit.Steps
     [Binding]
     public class MoveSteps
     {
+        private bool didThrow = false;
         private readonly Mock<IMovable> mockMovable = new();
 
         [Given(@"Тело находится в точке \((.*), (.*)\) пространства")]
@@ -250,13 +234,7 @@ namespace SpaceshipServer.Texts.XUnit.Steps
         [When(@"Выполняется операция движения тела")]
         public void MoveAttempt()
         {
-            new MoveCommand(this.mockMovable.Object).Execute();
-        }
-
-        [When(@"Попытка движения приводит к исключению")]
-        public void TryMoveGetExeption()
-        {
-            bool didThrow = false;
+            didThrow = false;
             try
             {
                 new MoveCommand(this.mockMovable.Object).Execute();
@@ -265,6 +243,11 @@ namespace SpaceshipServer.Texts.XUnit.Steps
             {
                 didThrow = true;
             }
+        }
+
+        [Then(@"Выброшено исключение")]
+        public void WasEx()
+        {
             Assert.True(didThrow);
         }
 
