@@ -83,11 +83,11 @@ namespace SpaceshipServer.Texts.XUnit.Features
         [Xunit.SkippableFactAttribute(DisplayName="Перемещение объекта")]
         [Xunit.TraitAttribute("FeatureTitle", "Движимые объекты")]
         [Xunit.TraitAttribute("Description", "Перемещение объекта")]
-        [Xunit.TraitAttribute("Category", "vanya")]
+        [Xunit.TraitAttribute("Category", "movables")]
         public void ПеремещениеОбъекта()
         {
             string[] tagsOfScenario = new string[] {
-                    "vanya"};
+                    "movables"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Перемещение объекта", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
