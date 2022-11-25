@@ -21,8 +21,10 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Setup test enviroment
+      run: dotnet tool install --global dotnet-coverage
     - name: Test
-      run: dotnet test --collect "Code Coverage" --results-directory ./tests
+      run: dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
