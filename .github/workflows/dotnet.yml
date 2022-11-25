@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+      run: dotnet test --collect "Code Coverage" --results-directory ./tests
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
