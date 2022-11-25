@@ -61,14 +61,32 @@ namespace SpaceshipServer.Texts.XUnit.Steps
         [When(@"Операция вычитания выкидывает исключение")]
         public void MinOperationException()
         {
-            Assert.Throws<ArgumentException>(() => this.resultVector = this.vector - this.secondVector);
+            bool didThrow = false;
+            try
+            {
+                this.resultVector = this.vector - this.secondVector;
+            }
+            catch (ArgumentException)
+            {
+                didThrow = true;
+            }
+            Assert.True(didThrow);
         }
 
 
         [When(@"Операция сложения выкидывает исключение")]
         public void SumOperationException()
         {
-            Assert.Throws<ArgumentException>(() => this.resultVector = this.vector + this.secondVector);
+            bool didThrow = false;
+            try
+            {
+                this.resultVector = this.vector + this.secondVector;
+            }
+            catch (ArgumentException)
+            {
+                didThrow = true;
+            }
+            Assert.True(didThrow);
         }
 
         [When(@"Происходит помещение вектора в строку")]
@@ -88,7 +106,16 @@ namespace SpaceshipServer.Texts.XUnit.Steps
         public void SetCoordException(int n1, int n2)
         {
             this.resultVector = this.vector;
-            Assert.Throws<ArgumentException>(() => this.resultVector[n1] = n2);
+            bool didThrow = false;
+            try
+            {
+                this.resultVector[n1] = n2;
+            }
+            catch (ArgumentException)
+            {
+                didThrow = true;
+            }
+            Assert.True(didThrow);
         }
 
         [Then(@"При получении (.*)-й координаты имеем (.*)")]
@@ -103,7 +130,16 @@ namespace SpaceshipServer.Texts.XUnit.Steps
         {
             this.resultVector = this.vector;
             int n = 0;
-            Assert.Throws<ArgumentException>(() => n = this.resultVector[n1]);
+            bool didThrow = false;
+            try
+            {
+                n = this.resultVector[n1];
+            }
+            catch (ArgumentException)
+            {
+                didThrow = true;
+            }
+            Assert.True(didThrow);
         }
 
         [Then(@"Метод GetHashCode работает верно")]
@@ -220,7 +256,16 @@ namespace SpaceshipServer.Texts.XUnit.Steps
         [When(@"Попытка движения приводит к исключению")]
         public void TryMoveGetExeption()
         {
-            Assert.Throws<Exception>(() => new MoveCommand(this.mockMovable.Object).Execute());
+            bool didThrow = false;
+            try
+            {
+                new MoveCommand(this.mockMovable.Object).Execute();
+            }
+            catch (Exception)
+            {
+                didThrow = true;
+            }
+            Assert.True(didThrow);
         }
 
         [Then(@"Тело имеет новые координаты \((.*), (.*)\)")]
