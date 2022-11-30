@@ -3,9 +3,9 @@ name: .NET
 on:
   workflow_dispatch:
   push:
-    branches: [ Spaceship_Move_Test ]
+    branches: [ Spaceship_Move_Test, master ]
   pull_request:
-    branches: [ Spaceship_Move_Test ]
+    branches: [ Spaceship_Move_Test, master ]
 jobs:
   build:
 
