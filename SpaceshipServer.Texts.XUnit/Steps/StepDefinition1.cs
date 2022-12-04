@@ -101,7 +101,6 @@ namespace SpaceshipServer.Texts.XUnit.Steps
         public void GetCoordException(int n1)
         {
             this.resultVector = this.vector;
-            int n = 0;
             didThrow = false;
             try
             {

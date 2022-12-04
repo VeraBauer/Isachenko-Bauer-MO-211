@@ -74,6 +74,7 @@ public class Vector
 
         }
 
+#nullable enable
         public override bool Equals(object? obj)
         {
             if (!(obj is Vector vector))
@@ -96,7 +97,7 @@ public class Vector
             return true;
 
         }
-
+#nullable disable
         public override int GetHashCode()
         {
             return HashCode.Combine(coords, this.coords.Count);
