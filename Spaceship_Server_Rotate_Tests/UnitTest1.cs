@@ -18,4 +18,20 @@ namespace Spaceship_Server_Rotate_Tests
 
         }
     }
+
+    public class RotateTest
+    {
+        [Fact]
+        public void MoqRotate()
+        {
+            Mock<IRotatable> Spaceship = new();
+            Spaceship.SetupGet<Fraction>(m => m.angle[0]).Returns(new Fraction(1, 4)).Verifiable();
+            Spaceship.SetupGet<Fraction>(m => m.angle_velocity[0]).Returns(new Fraction(1, 2)).Verifiable();
+            RotateCommand rc = new RotateCommand(Spaceship.Object);
+            rc.Execute();
+            Assert.Equal(Spaceship.Object.angle[0], new Fraction(3, 4));
+
+
+        }
+    }
 }
