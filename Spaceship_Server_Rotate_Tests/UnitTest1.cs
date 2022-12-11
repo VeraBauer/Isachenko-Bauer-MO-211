@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 using Spaceship__Server;
 using Moq;
@@ -32,6 +33,14 @@ namespace Spaceship_Server_Rotate_Tests
             Assert.Equal(Spaceship.Object.angle[0], new Fraction(3, 4));
 
 
+        }
+        [Fact]
+        public void CantReadAngle()
+        {
+            Mock<IRotatable> Spaceship = new();
+            Spaceship.SetupGet<Fraction>(m => m.angle[0]).Throws<Exception>().Verifiable();
+            RotateCommand rc = new RotateCommand(Spaceship.Object);
+            Assert.Throws<Exception>(() => { rc.Execute(); });
         }
     }
 }
