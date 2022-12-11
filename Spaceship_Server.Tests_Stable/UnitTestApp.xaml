@@ -1,7 +1,0 @@
-﻿<Application
-    x:Class="Spaceship_Server.Tests_Stable.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Spaceship_Server.Tests_Stable">
-
-</Application>

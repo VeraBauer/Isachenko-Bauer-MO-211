@@ -2,62 +2,198 @@
 
 namespace Spaceship__Server
 {
-    public interface IEntity
+    public interface ICommand
     {
-        double[] Position { get; set; }
+        public void Execute();
     }
-
-    public interface IMovable : IEntity
+    public class Fraction
     {
-        double[] Speed { get; set; }
-        public void Move();
-    }
-
-    public class Speacship : IMovable
-    {
-        public double[] Speed { set; get; }
-
-        public double[] Position { set; get; }
-        public void Move()
+        int numerator { get; set; }
+        int denominator { get; set; }
+        public Fraction(int num, int den)
         {
-            try
+            numerator = num;
+            denominator = den;
+        }
+        public static Fraction operator +(Fraction a, Fraction b)
+        {
+            if (a.denominator != b.denominator)
             {
-                if (Speed.Length != Position.Length)
+                int denom = a.denominator*b.denominator;
+                int numer_a = a.numerator*b.denominator;
+                int numer_b = b.numerator*a.denominator;
+                int numer = numer_a + numer_b;
+                if (denom<numer)
                 {
-                    throw new Exception("Неверный формат вектора скорости.") ;
+                    for (int i = denom; i>2; i--)
+                    {
+                        if (numer%i==0 && denom%i==0)
+                        {
+                            numer = numer/i;
+                            denom = denom/i;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = numer; i>2; i--)
+                    {
+                        if (numer%i==0 && denom%i==0)
+                        {
+                            numer = numer/i;
+                            denom = denom/i;
+                        }
+                    }
+                }
+                return new Fraction(numer, denom);
+            }
+            else
+            {
+                return new Fraction(a.numerator+b.numerator, a.denominator);
+            }
+        }
+        public static bool operator ==(Fraction a, Fraction b)
+        {
+            if (a.denominator<a.numerator)
+            {
+                for (int i = a.denominator; i>2; i--)
+                {
+                    if (a.numerator%i==0 && a.denominator%i==0)
+                    {
+                        a.numerator = a.numerator/i;
+                        a.denominator = a.denominator/i;
+                    }
                 }
             }
-            catch(Exception)
+            else
             {
-                Console.WriteLine("Не полетели...");
-            }
-            try
-            {
-                var temp = Position;
-            }
-            catch(Exception)
-            {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно прочитать положение объекта в пространстве.");
-            }
-            try
-            {
-                var temp = Speed;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно прочитать значение мгновенной скорости.");
-            }
-            try
-            {
-                for (var i = 0; i < Position.Length; i++)
+                for (int i = a.numerator; i>2; i--)
                 {
-                    Position[i] += Speed[i];
+                    if (a.numerator%i==0 && a.denominator%i==0)
+                    {
+                        a.numerator = a.numerator/i;
+                        a.denominator = a.denominator/i;
+                    }
                 }
             }
-            catch(Exception)
+            if (b.denominator<b.numerator)
             {
-                Console.WriteLine("Попытка сдвинуть объект, у которого невозможно изменить положение в пространстве.");
+                for (int i = b.denominator; i>2; i--)
+                {
+                    if (b.numerator%i==0 && b.denominator%i==0)
+                    {
+                        b.numerator = b.numerator/i;
+                        b.denominator = b.denominator/i;
+                    }
+                }
             }
+            else
+            {
+                for (int i = b.numerator; i>2; i--)
+                {
+                    if (b.numerator%i==0 && b.denominator%i==0)
+                    {
+                        b.numerator = b.numerator/i;
+                        b.denominator = b.denominator/i;
+                    }
+                }
+            }
+            if (a.numerator != b.numerator || a.denominator != b.denominator )
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public static bool operator !=(Fraction a, Fraction b)
+        {
+            if (a.denominator<a.numerator)
+            {
+                for (int i = a.denominator; i>2; i--)
+                {
+                    if (a.numerator%i==0 && a.denominator%i==0)
+                    {
+                        a.numerator = a.numerator/i;
+                        a.denominator = a.denominator/i;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = a.numerator; i>2; i--)
+                {
+                    if (a.numerator%i==0 && a.denominator%i==0)
+                    {
+                        a.numerator = a.numerator/i;
+                        a.denominator = a.denominator/i;
+                    }
+                }
+            }
+            if (b.denominator<b.numerator)
+            {
+                for (int i = b.denominator; i>2; i--)
+                {
+                    if (b.numerator%i==0 && b.denominator%i==0)
+                    {
+                        b.numerator = b.numerator/i;
+                        b.denominator = b.denominator/i;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = b.numerator; i>2; i--)
+                {
+                    if (b.numerator%i==0 && b.denominator%i==0)
+                    {
+                        b.numerator = b.numerator/i;
+                        b.denominator = b.denominator/i;
+                    }
+                }
+            }
+            if (a.numerator != b.numerator || a.denominator != b.denominator)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+#nullable enable
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is Fraction objec)) return false;
+            if (this == objec) return true;
+            else return false;
+        }
+#nullable disable
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(numerator, denominator);
+        }
+
+    }
+
+    public interface IRotatable
+    {
+        Fraction[] angle { get; set; }
+        Fraction[] angle_velocity { get; }
+    }
+    public class RotateCommand : ICommand
+    {
+        IRotatable _object;
+        public RotateCommand(IRotatable obj)
+        {
+            _object = obj;
+        }
+
+        public void Execute()
+        {
+            _object.angle[0] = _object.angle[0] + _object.angle_velocity[0];
+            _object.angle[1] = _object.angle[1] + _object.angle_velocity[1];
         }
     }
 }
