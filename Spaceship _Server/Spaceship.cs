@@ -23,82 +23,54 @@ namespace Spaceship__Server
                 int numer_a = a.numerator*b.denominator;
                 int numer_b = b.numerator*a.denominator;
                 int numer = numer_a + numer_b;
-                if (denom<numer)
+                int min = Math.Min(denom, numer);
+                for (int i = min; i>1; i--)
                 {
-                    for (int i = denom; i>2; i--)
+                    if ((numer % i==0) && (denom % i==0))
                     {
-                        if (numer%i==0 && denom%i==0)
-                        {
-                            numer = numer/i;
-                            denom = denom/i;
-                        }
-                    }
-                }
-                else
-                {
-                    for (int i = numer; i>2; i--)
-                    {
-                        if (numer%i==0 && denom%i==0)
-                        {
-                            numer = numer/i;
-                            denom = denom/i;
-                        }
+                        numer /= i;
+                        denom /= i;
                     }
                 }
                 return new Fraction(numer, denom);
             }
             else
             {
-                return new Fraction(a.numerator+b.numerator, a.denominator);
+                int numer = a.numerator+b.numerator;
+                int denom = a.denominator;
+                int mimin = Math.Min(denom, numer);
+                for (int i = mimin; i>1; i--)
+                {
+                    if (numer%i==0 && denom%i==0)
+                    {
+                        numer /= i;
+                        denom /= i;
+                    }
+                }
+                return new Fraction(numer, denom);
             }
         }
         public static bool operator ==(Fraction a, Fraction b)
         {
-            if (a.denominator<a.numerator)
+            int mimin = Math.Min(a.denominator, a.numerator);
+            for (int i = mimin; i>1; i--)
             {
-                for (int i = a.denominator; i>2; i--)
+                if (a.numerator%i==0 && a.denominator%i==0)
                 {
-                    if (a.numerator%i==0 && a.denominator%i==0)
-                    {
-                        a.numerator = a.numerator/i;
-                        a.denominator = a.denominator/i;
-                    }
+                    a.numerator = a.numerator/i;
+                    a.denominator = a.denominator/i;
                 }
             }
-            else
+            int mmin = Math.Min(b.denominator, b.numerator);
+            for (int i = mmin; i>1; i--)
             {
-                for (int i = a.numerator; i>2; i--)
+                if (b.numerator%i==0 && b.denominator%i==0)
                 {
-                    if (a.numerator%i==0 && a.denominator%i==0)
-                    {
-                        a.numerator = a.numerator/i;
-                        a.denominator = a.denominator/i;
-                    }
+                    b.numerator = b.numerator/i;
+                    b.denominator = b.denominator/i;
                 }
             }
-            if (b.denominator<b.numerator)
-            {
-                for (int i = b.denominator; i>2; i--)
-                {
-                    if (b.numerator%i==0 && b.denominator%i==0)
-                    {
-                        b.numerator = b.numerator/i;
-                        b.denominator = b.denominator/i;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = b.numerator; i>2; i--)
-                {
-                    if (b.numerator%i==0 && b.denominator%i==0)
-                    {
-                        b.numerator = b.numerator/i;
-                        b.denominator = b.denominator/i;
-                    }
-                }
-            }
-            if (a.numerator != b.numerator || a.denominator != b.denominator )
+            if (a.numerator != b.numerator || a.denominator != b.denominator)
             {
                 return false;
             }
@@ -109,57 +81,31 @@ namespace Spaceship__Server
         }
         public static bool operator !=(Fraction a, Fraction b)
         {
-            if (a.denominator<a.numerator)
+            int mimin = Math.Min(a.denominator, a.numerator);
+            for (int i = mimin; i>1; i--)
             {
-                for (int i = a.denominator; i>2; i--)
+                if (a.numerator%i==0 && a.denominator%i==0)
                 {
-                    if (a.numerator%i==0 && a.denominator%i==0)
-                    {
-                        a.numerator = a.numerator/i;
-                        a.denominator = a.denominator/i;
-                    }
+                    a.numerator = a.numerator/i;
+                    a.denominator = a.denominator/i;
                 }
             }
-            else
+            int mmin = Math.Min(b.denominator, b.numerator);
+            for (int i = mmin; i>1; i--)
             {
-                for (int i = a.numerator; i>2; i--)
+                if (b.numerator%i==0 && b.denominator%i==0)
                 {
-                    if (a.numerator%i==0 && a.denominator%i==0)
-                    {
-                        a.numerator = a.numerator/i;
-                        a.denominator = a.denominator/i;
-                    }
+                    b.numerator = b.numerator/i;
+                    b.denominator = b.denominator/i;
                 }
             }
-            if (b.denominator<b.numerator)
-            {
-                for (int i = b.denominator; i>2; i--)
-                {
-                    if (b.numerator%i==0 && b.denominator%i==0)
-                    {
-                        b.numerator = b.numerator/i;
-                        b.denominator = b.denominator/i;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = b.numerator; i>2; i--)
-                {
-                    if (b.numerator%i==0 && b.denominator%i==0)
-                    {
-                        b.numerator = b.numerator/i;
-                        b.denominator = b.denominator/i;
-                    }
-                }
-            }
-            if (a.numerator != b.numerator || a.denominator != b.denominator)
-            {
-                return true;
-            }
-            else
+            if (a.numerator == b.numerator && a.denominator == b.denominator)
             {
                 return false;
+            }
+            else
+            {
+                return true;
             }
         }
 #nullable enable
@@ -173,6 +119,11 @@ namespace Spaceship__Server
         public override int GetHashCode()
         {
             return HashCode.Combine(numerator, denominator);
+        }
+
+        public override string ToString()
+        {
+            return numerator + "/" + denominator;
         }
 
     }
@@ -194,6 +145,8 @@ namespace Spaceship__Server
         {
             _object.angle[0] = _object.angle[0] + _object.angle_velocity[0];
             _object.angle[1] = _object.angle[1] + _object.angle_velocity[1];
+            Fraction[] resultAngle = new Fraction[2] { _object.angle[0], _object.angle[1] };
+            _object.angle = resultAngle;
         }
     }
 }
