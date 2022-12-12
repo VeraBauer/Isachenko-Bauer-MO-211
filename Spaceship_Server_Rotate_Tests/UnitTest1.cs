@@ -69,6 +69,12 @@ namespace Spaceship_Server_Rotate_Tests
         {
             Assert.Equal(new Fraction(2, 4)+new Fraction(2, 4), new Fraction(1, 1));
         }
+        [Fact]
+        public void ReductableFraction()
+        {
+            Fraction a = new Fraction(2, 4);
+            Assert.Equal(a, new Fraction(1, 2));
+        }
     }
 }
 
