@@ -19,12 +19,12 @@ namespace Spaceship_Server_Rotate_Tests
         [Fact]
         public void UnequalityTest_true()
         {
-            Assert.True(new Fraction(3, 5) != new Fraction(4, 7));
+            Assert.True(new Fraction(3, 6) != new Fraction(4, 7));
         }
         [Fact]
         public void EqualityTest_true()
         {
-            Assert.True(new Fraction(1, 2) == new Fraction(2, 4));
+            Assert.True(new Fraction(3, 6) == new Fraction(2, 4));
         }
         [Fact]
         public void UnequalityTest_false()
@@ -63,6 +63,11 @@ namespace Spaceship_Server_Rotate_Tests
         {
             Fraction a = new Fraction(1, 2);
             Assert.Equal("1/2", a.ToString());
+        }
+        [Fact]
+        public void ReductableSum()
+        {
+            Assert.Equal(new Fraction (1,2)+new Fraction (1,2), new Fraction (1,1));
         }
     }
 
