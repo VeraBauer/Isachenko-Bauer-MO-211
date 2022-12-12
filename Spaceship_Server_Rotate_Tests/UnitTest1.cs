@@ -19,12 +19,12 @@ namespace Spaceship_Server_Rotate_Tests
         [Fact]
         public void UnequalityTest_true()
         {
-            Assert.True(new Fraction(3, 6) != new Fraction(4, 7));
+            Assert.True(new Fraction(3, 5) != new Fraction(4, 7));
         }
         [Fact]
         public void EqualityTest_true()
         {
-            Assert.True(new Fraction(3, 6) == new Fraction(2, 4));
+            Assert.True(new Fraction(1, 2) == new Fraction(2, 4));
         }
         [Fact]
         public void UnequalityTest_false()
@@ -67,66 +67,66 @@ namespace Spaceship_Server_Rotate_Tests
         [Fact]
         public void ReductableSum()
         {
-            Assert.Equal(new Fraction (1,2)+new Fraction (1,2), new Fraction (1,1));
+            Assert.Equal(new Fraction(2, 4)+new Fraction(2, 4), new Fraction(1, 1));
         }
     }
+}
 
-    public class RotateTest
+public class RotateTest
+{
+    public bool DidThrowTry(RotateCommand rc)
     {
-        public bool DidThrowTry(RotateCommand rc)
+        try
         {
-            try
-            {
-                rc.Execute();
-            }
-            catch (Exception)
-            {
-                return true;
-            }
-            return false;
+            rc.Execute();
         }
-        [Fact]
-        public void MoqRotate()
+        catch (Exception)
         {
-            Mock<IRotatable> Spaceship = new();
-            Spaceship.SetupGet<Fraction[]>(m => m.angle).Returns(new Fraction[2] { new Fraction(1, 4), new Fraction(0, 0) });
-            Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Returns(new Fraction[2] { new Fraction(1, 2), new Fraction(0, 0) });
-            RotateCommand rc = new RotateCommand(Spaceship.Object);
-            DidThrowTry(rc);
-            Assert.Equal(Spaceship.Object.angle[0], new Fraction(3, 4));
+            return true;
         }
-        [Fact]
-        public void CantReadAngle()
-        {
-            Mock<IRotatable> Spaceship = new();
-            Spaceship.SetupGet<Fraction[]>(m => m.angle).Throws<Exception>().Verifiable();
-            RotateCommand rc = new RotateCommand(Spaceship.Object);
-            Assert.True(DidThrowTry(rc));
-        }
-        [Fact]
-        public void CantReadAngleVelocity()
-        {
-            Mock<IRotatable> Spaceship = new();
-            Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Throws<Exception>().Verifiable();
-            RotateCommand rc = new RotateCommand(Spaceship.Object);
-            Assert.True(DidThrowTry(rc));
-        }
-        [Fact]
-        public void CantChangeAngle()
-        {
-            Mock<IRotatable> Spaceship = new();
-            Spaceship.SetupGet<Fraction[]>(m => m.angle).Returns(new Fraction[2] { new Fraction(1, 4), new Fraction(0, 0) });
-            Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Returns(new Fraction[2] { new Fraction(1, 2), new Fraction(0, 0) });
-            Spaceship.SetupSet<Fraction[]>(m => m.angle = It.IsAny<Fraction[]>()).Throws<Exception>().Verifiable();
-            RotateCommand rc = new RotateCommand(Spaceship.Object);
-            Assert.True(DidThrowTry(rc));
-        }
-        [Fact]
-        public void EmptyAngles()
-        {
-            Mock<IRotatable> Spaceship = new();
-            RotateCommand rc = new RotateCommand(Spaceship.Object);
-            Assert.True(DidThrowTry(rc));
-        }
+        return false;
+    }
+    [Fact]
+    public void MoqRotate()
+    {
+        Mock<IRotatable> Spaceship = new();
+        Spaceship.SetupGet<Fraction[]>(m => m.angle).Returns(new Fraction[2] { new Fraction(1, 4), new Fraction(0, 0) });
+        Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Returns(new Fraction[2] { new Fraction(1, 2), new Fraction(0, 0) });
+        RotateCommand rc = new RotateCommand(Spaceship.Object);
+        DidThrowTry(rc);
+        Assert.Equal(Spaceship.Object.angle[0], new Fraction(3, 4));
+    }
+    [Fact]
+    public void CantReadAngle()
+    {
+        Mock<IRotatable> Spaceship = new();
+        Spaceship.SetupGet<Fraction[]>(m => m.angle).Throws<Exception>().Verifiable();
+        RotateCommand rc = new RotateCommand(Spaceship.Object);
+        Assert.True(DidThrowTry(rc));
+    }
+    [Fact]
+    public void CantReadAngleVelocity()
+    {
+        Mock<IRotatable> Spaceship = new();
+        Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Throws<Exception>().Verifiable();
+        RotateCommand rc = new RotateCommand(Spaceship.Object);
+        Assert.True(DidThrowTry(rc));
+    }
+    [Fact]
+    public void CantChangeAngle()
+    {
+        Mock<IRotatable> Spaceship = new();
+        Spaceship.SetupGet<Fraction[]>(m => m.angle).Returns(new Fraction[2] { new Fraction(1, 4), new Fraction(0, 0) });
+        Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Returns(new Fraction[2] { new Fraction(1, 2), new Fraction(0, 0) });
+        Spaceship.SetupSet<Fraction[]>(m => m.angle = It.IsAny<Fraction[]>()).Throws<Exception>().Verifiable();
+        RotateCommand rc = new RotateCommand(Spaceship.Object);
+        Assert.True(DidThrowTry(rc));
+    }
+    [Fact]
+    public void EmptyAngles()
+    {
+        Mock<IRotatable> Spaceship = new();
+        RotateCommand rc = new RotateCommand(Spaceship.Object);
+        Assert.True(DidThrowTry(rc));
     }
 }

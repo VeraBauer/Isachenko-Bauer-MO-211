@@ -57,8 +57,8 @@ namespace Spaceship__Server
             {
                 if (a.numerator%i==0 && a.denominator%i==0)
                 {
-                    a.numerator = a.numerator/i;
-                    a.denominator = a.denominator/i;
+                    a.numerator /= i;
+                    a.denominator /= i;
                 }
             }
             int mmin = Math.Min(b.denominator, b.numerator);
@@ -66,8 +66,8 @@ namespace Spaceship__Server
             {
                 if (b.numerator%i==0 && b.denominator%i==0)
                 {
-                    b.numerator = b.numerator/i;
-                    b.denominator = b.denominator/i;
+                    b.numerator /= i;
+                    b.denominator /= i;
                 }
             }
             if (a.numerator != b.numerator || a.denominator != b.denominator)
@@ -86,8 +86,8 @@ namespace Spaceship__Server
             {
                 if (a.numerator%i==0 && a.denominator%i==0)
                 {
-                    a.numerator = a.numerator/i;
-                    a.denominator = a.denominator/i;
+                    a.numerator /= i;
+                    a.denominator /= i;
                 }
             }
             int mmin = Math.Min(b.denominator, b.numerator);
@@ -95,8 +95,8 @@ namespace Spaceship__Server
             {
                 if (b.numerator%i==0 && b.denominator%i==0)
                 {
-                    b.numerator = b.numerator/i;
-                    b.denominator = b.denominator/i;
+                    b.numerator /= i;
+                    b.denominator /= i;
                 }
             }
             if (a.numerator == b.numerator && a.denominator == b.denominator)
