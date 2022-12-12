@@ -19,7 +19,7 @@ namespace Spaceship_Server_Rotate_Tests
         [Fact]
         public void UnequalityTest_true()
         {
-            Assert.True(new Fraction(6, 10) != new Fraction(4, 7));
+            Assert.True(new Fraction(6, 10) != new Fraction(3, 6));
         }
         [Fact]
         public void EqualityTest_true()
