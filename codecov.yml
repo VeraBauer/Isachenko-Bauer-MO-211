@@ -1,5 +1,5 @@
 ignore:
-    "Spaceship_Server_Rotate_Tests"
+    "RotateTest.cs "
     
 - name: Codecov
   uses: codecov/codecov-action@v3.1.1
