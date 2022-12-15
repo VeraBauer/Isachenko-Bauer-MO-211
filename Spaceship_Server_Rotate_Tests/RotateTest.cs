@@ -26,7 +26,7 @@ namespace Spaceship_Server_Rotate_Tests
             Spaceship.SetupGet<Fraction[]>(m => m.angle).Returns(new Fraction[2] { new Fraction(1, 4), new Fraction(0, 0) });
             Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Returns(new Fraction[2] { new Fraction(1, 2), new Fraction(0, 0) });
             RotateCommand rc = new RotateCommand(Spaceship.Object);
-            DidThrowTry(rc);
+            rc.Execute();
             Assert.Equal(Spaceship.Object.angle[0], new Fraction(3, 4));
         }
         [Fact]
@@ -35,7 +35,7 @@ namespace Spaceship_Server_Rotate_Tests
             Mock<IRotatable> Spaceship = new();
             Spaceship.SetupGet<Fraction[]>(m => m.angle).Throws<Exception>().Verifiable();
             RotateCommand rc = new RotateCommand(Spaceship.Object);
-            Assert.True(DidThrowTry(rc));
+            Assert.Throws<Exception>(() => { rc.Execute(); });
         }
         [Fact]
         public void CantReadAngleVelocity()
@@ -43,7 +43,7 @@ namespace Spaceship_Server_Rotate_Tests
             Mock<IRotatable> Spaceship = new();
             Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Throws<Exception>().Verifiable();
             RotateCommand rc = new RotateCommand(Spaceship.Object);
-            Assert.True(DidThrowTry(rc));
+            Assert.Throws<Exception>(() => { rc.Execute(); });
         }
         [Fact]
         public void CantChangeAngle()
@@ -53,14 +53,14 @@ namespace Spaceship_Server_Rotate_Tests
             Spaceship.SetupGet<Fraction[]>(m => m.angle_velocity).Returns(new Fraction[2] { new Fraction(1, 2), new Fraction(0, 0) });
             Spaceship.SetupSet<Fraction[]>(m => m.angle = It.IsAny<Fraction[]>()).Throws<Exception>().Verifiable();
             RotateCommand rc = new RotateCommand(Spaceship.Object);
-            Assert.True(DidThrowTry(rc));
+            Assert.Throws<Exception>(() => { rc.Execute(); });
         }
         [Fact]
         public void EmptyAngles()
         {
             Mock<IRotatable> Spaceship = new();
             RotateCommand rc = new RotateCommand(Spaceship.Object);
-            Assert.True(DidThrowTry(rc));
+            Assert.Throws<Exception>(() => { rc.Execute(); });
         }
     }
 }
