@@ -1,8 +1,7 @@
+ignore:
+    ["Spaceship_Server_Rotate_Test"]
 codecov:
   token: ${{ secrets.CODECOV_TOKEN }}
-  ignore:
-    ["Spaceship_Server_Rotate_Test"]
- 
 coverage:
   precision: 2
   round: down
