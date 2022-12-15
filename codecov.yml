@@ -1,2 +1,17 @@
-ignore:
-    "RotateTest.cs "
+- name: Codecov
+  uses: codecov/codecov-action@v3.1.1
+  codecov:
+  token: ${{ secrets.CODECOV_TOKEN }}
+  ignore:
+    ["Spaceship_Server_Rotate_Test"]
+ 
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+  notify:
+    # notification blocks. See: https://docs.codecov.io/docs/codecovyml-reference#section-coverage-notify
+  status:
+    project:
+    patch:
+    changes:
