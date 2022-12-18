@@ -10,6 +10,6 @@ namespace Spaceship__Server
 
     public interface IMacro : ICommand
     {
-        IList<ICommand> actions {set;}
+        IList<ICommand> actions { set; get; }
     }
 }
