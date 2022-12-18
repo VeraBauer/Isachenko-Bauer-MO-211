@@ -16,7 +16,7 @@ namespace Spaceship__Server
         }
         public void Execute()
         {
-            ICommand mcContinious = IoC.Resolve<ICommand>("IUObject.Adapters.IMovable.Continious", this._obj);
+            ICommand mcContinious = IoC.Resolve<ICommand>("IUObject.IMovable.Continious", this._obj);
             IoC.Resolve<ICommand>("IQueue.Push", mcContinious);
         }
     }
