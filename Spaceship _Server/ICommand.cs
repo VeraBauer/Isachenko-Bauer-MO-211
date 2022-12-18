@@ -7,4 +7,9 @@ namespace Spaceship__Server
     {
         public void Execute();
     }
+
+    public interface IMacro : ICommand
+    {
+        IList<ICommand> actions {set;}
+    }
 }
