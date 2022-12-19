@@ -21,9 +21,9 @@ namespace Spaceship__Server.Strategies
     }
     public class MoveCommandContinious
     {
-        public object Continious(IUObject arg)
+        public object Continious(object[] args)
         {
-            IMovable mo = new MovableSetupable (arg);
+            IMovable mo = new MovableSetupable ((IUObject) args[0]);
 
             MoveCommand mc = new MoveCommand(mo);
 
