@@ -4,7 +4,7 @@ namespace Spaceship__Server
 {
     public interface IQueue
     {
-        public bool Enqueue(object[] args);
+        public object Enqueue(object[] args);
         public object Dequeue();
     }
 }

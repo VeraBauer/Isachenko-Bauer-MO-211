@@ -17,20 +17,15 @@ namespace Spaceship.IoC.Tests
         {
             new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
             Moqueue.Setup(o => o.Enqueue(new object[5])).Verifiable();
-            /*Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IQueue.Push", (object[] args) =>
-            {
-                Moqueue.Object.Enqueue(args);
-            }).Execute();*/
-            Func<object[], object> deleg = (object[] args) => {return Moqueue.Object.Enqueue(args);};
             Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IQueue.Push", (object[] args) =>
             {
-                deleg(args);
+                return Moqueue.Object.Enqueue(args);
             }).Execute();
 
             Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IUObject.IMovable.Continious", (object[] args) =>
             {
                 MoveCommandContinious mcc = new MoveCommandContinious();
-                mcc.Continious(args);
+                return mcc.Continious(args);
             }).Execute();
             
 
