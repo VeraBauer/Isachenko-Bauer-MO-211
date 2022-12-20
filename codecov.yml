@@ -1,4 +1,2 @@
-ignore:
-  [Spaceship.IoC.Tests.No.Strategies]
 codecov:
   token: ${{ secrets.CODECOV_TOKEN }}
