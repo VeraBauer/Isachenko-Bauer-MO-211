@@ -1,4 +1,4 @@
 ignore:
   [Spaceship.IoC.Tests.No.Strategies]
-token: ${{ secrets.CODECOV_TOKEN }}
-  "Spaceship_Server_Rotate_Test"
+codecov:
+  token: ${{ secrets.CODECOV_TOKEN }}
