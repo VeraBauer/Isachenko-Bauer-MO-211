@@ -41,6 +41,7 @@ public class ContiniousMovement
 
         Assert.Equal(1, _queue.Count);
     }
+    /*
     [Fact]
     public void MovableSetupableGetSpeed()
     {
@@ -53,5 +54,5 @@ public class ContiniousMovement
         Adapter.MovableSetupable mov = new(_obj.Object);
 
         Assert.Equal(new Vector(1, 1), mov.Speed);
-    }
+    }*/
 }
