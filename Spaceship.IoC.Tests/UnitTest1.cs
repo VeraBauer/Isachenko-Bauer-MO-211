@@ -29,6 +29,7 @@ namespace Spaceship.IoC.Tests
             }).Execute();
             
             Mock<IUObject> Mobj = new();
+
             Mobj.Setup(o => o.get_property("Speed")).Returns(new Vector(1, 2, 3));
             Mobj.Setup(o => o.get_property("Position")).Returns(new Vector(1, 1, 1));
             StartMoveCommand smc = new StartMoveCommand(Mobj.Object);
