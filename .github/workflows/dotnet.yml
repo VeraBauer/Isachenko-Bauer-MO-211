@@ -3,9 +3,9 @@ name: .NET
 on:
   workflow_dispatch:
   push:
-    branches: --all
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, ContiniousMovementWithoutStrategies]
   pull_request:
-    branches: --all
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, ContiniousMovementWithoutStrategies]
 jobs:
   build:
 
