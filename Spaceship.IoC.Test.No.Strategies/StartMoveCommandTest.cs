@@ -38,5 +38,7 @@ public class ContiniousMovement
         StartMoveCommand cmd = new(order.Object);
         
         cmd.Execute();
+
+        Assert.Equal(1, _queue.Count);
     }
 }
