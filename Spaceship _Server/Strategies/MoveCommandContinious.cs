@@ -19,7 +19,7 @@ namespace Spaceship__Server.Strategies
             this.Position = (Vector)obj.get_property("Position");
         }
     }
-    public class MoveCommandContinious
+    public class MoveCommandContiniousAdapter
     {
         public object Continious(object[] args)
         {
@@ -27,12 +27,10 @@ namespace Spaceship__Server.Strategies
 
             MoveCommand mc = new MoveCommand(mo);
 
-            IMacro command = null;
-
-            command.actions.Add(mc);
-            command.actions.Add(command);
-
-            return command;
+            //IMacro command = null;
+            Mock<IMacro> command = new();
+            command.Setup(o => o.actions).Returns(new List<Spaceship__Server.ICommand>{mc, (ICommand)command});
+            return (ICommand) command.Object;
         }
     }
 }
