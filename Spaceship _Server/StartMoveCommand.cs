@@ -4,14 +4,14 @@ using Hwdtech;
 
 namespace Spaceship__Server
 {
-    public interface MoveCommandStartable : Spaceship__Server.ICommand
+    public interface IMoveCommandStartable : Spaceship__Server.ICommand
     {
         IUObject _obj {set; get;}
         int Velocity{get; set;}
         Queue<Spaceship__Server.ICommand> _queue{get;set;}
     };
 
-    public class StartMoveCommand : MoveCommandStartable
+    public class StartMoveCommand : IMoveCommandStartable
     {
         public IUObject _obj{set; get;}
         public int Velocity{get; set;}
@@ -29,8 +29,8 @@ namespace Spaceship__Server
             IMovable mobj = Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.IMovable", _obj);
 
             MoveCommand mc = new MoveCommand(mobj);
-            
-            _queue.Enqueue(mc);
+
+            _queue.Enqueue((ICommand) mc);
         }
     };
 }
