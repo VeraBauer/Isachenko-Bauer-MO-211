@@ -4,16 +4,6 @@ namespace Spaceship__Server
 {
     public class Adapter
     {
-        /* public class MovableSetupable : IMovable
-    {
-        public Vector Speed { get; }
-        public Vector Position { get; set; }
-        public MovableSetupable(IUObject obj)
-        {
-            this.Speed = (Vector)obj.get_property("Speed");
-            this.Position = (Vector)obj.get_property("Position");
-        }
-    }*/
         public IMovable IUObjectToIMovable(object[] args)
         {
             IUObject adaptable = (IUObject) args[0];
@@ -22,8 +12,6 @@ namespace Spaceship__Server
 
             adapted.Setup(a => a.Position).Returns((Vector)adaptable.get_property("Position"));
             adapted.Setup(a => a.Speed).Returns((Vector)adaptable.get_property("Velocity"));
-
-            //IMovable adapted =(IMovable) new MovableSetupable(adaptable);
 
             return adapted.Object;
         }
