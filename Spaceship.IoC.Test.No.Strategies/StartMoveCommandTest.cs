@@ -41,4 +41,17 @@ public class ContiniousMovement
 
         Assert.Equal(1, _queue.Count);
     }
+    [Fact]
+    public void MovableSetupableGetSpeed()
+    {
+        Mock<IUObject> _obj = new();
+
+        _obj.Setup(o => o.get_property("Velocity")).Returns((object) new Vector(1, 1));
+
+        _obj.Setup(o => o.get_property("Position")).Returns((object) new Vector(0, 0));
+
+        Adapter.MovableSetupable mov = new(_obj.Object);
+
+        Assert.Equal(new Vector(1, 1), mov.Speed);
+    }
 }
