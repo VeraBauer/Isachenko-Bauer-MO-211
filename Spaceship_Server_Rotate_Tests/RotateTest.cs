@@ -7,18 +7,6 @@ namespace Spaceship_Server_Rotate_Tests
 {
     public class RotateTest
     {
-        public bool DidThrowTry(RotateCommand rc)
-        {
-            try
-            {
-                rc.Execute();
-            }
-            catch (Exception)
-            {
-                return true;
-            }
-            return false;
-        }
         [Fact]
         public void MoqRotate()
         {
