@@ -33,12 +33,13 @@ public class ContiniousMovement
 
         order.Setup(o => o.get_property("Queue")).Returns((object) _queue);
 
-        order.Setup(o => o.get_property("Velocity")).Returns((object) 5 );
+        order.Setup(o => o.get_property("Velocity")).Returns((object) new Vector(5, 5) );
 
         StartMoveCommand cmd = new(order.Object);
         
         cmd.Execute();
 
-        Assert.Equal(1, _queue.Count);
+        Assert.Single(_queue);
+        //Assert.Equal(1, );
     }
 }
