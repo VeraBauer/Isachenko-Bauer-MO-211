@@ -13,10 +13,10 @@ public class ContiniousMovement
     {
         new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
 
-        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.IMovable", (object[] args) => 
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.MoveCommand", (object[] args) => 
         {
             Adapter adp = new Adapter();
-            return adp.IUObjectToIMovable(args);
+            return adp.IUObjectToMoveCommand(args);
         }).Execute();
 
         Mock<IUObject> order = new();

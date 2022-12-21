@@ -4,7 +4,7 @@ namespace Spaceship__Server
 {
     public class Adapter
     {
-        public IMovable IUObjectToIMovable(object[] args)
+        public MoveCommand IUObjectToMoveCommand(object[] args)
         {
             IUObject adaptable = (IUObject) args[0];
 
@@ -12,8 +12,8 @@ namespace Spaceship__Server
 
             adapted.Setup(a => a.Position).Returns((Vector)adaptable.get_property("Position"));
             adapted.Setup(a => a.Speed).Returns((Vector)adaptable.get_property("Velocity"));
-
-            return adapted.Object;
+            MoveCommand mc = new(adapted.Object);
+            return mc;
         }
     }
 }
