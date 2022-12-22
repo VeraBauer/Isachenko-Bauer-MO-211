@@ -18,13 +18,13 @@ public class UnitTest1
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Strategies.SolveTree", (object[] args) =>
         {
-            TreeSolver solver = new();
-            return  (object)solver.Solve(args);
+            TreeDesicion td = new();
+            return (object)td.Decide(args);
         }).Execute();
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.IMovable", (object [] args) => 
         {
-            Adapter adp= new();
+            Adapter adp = new();
             return  (object)adp.IUObjectToIMovable(args);
         }).Execute();
         
@@ -40,19 +40,19 @@ public class UnitTest1
             Mock<ILeaf> l41 = new();
             l4.Setup(l => l.value).Returns(4);
             l3.Setup(l => l.value).Returns(3);
-            l3.Setup(l => l.GetSons()).Returns(new SortedSet<ILeaf> {l4.Object});
+            l3.Setup(l => l.GetSons()).Returns(new List<ILeaf> {l4.Object});
             l2.Setup(l => l.value).Returns(2);
-            l2.Setup(l => l.GetSons()).Returns(new SortedSet<ILeaf> {l3.Object});
+            l2.Setup(l => l.GetSons()).Returns(new List<ILeaf> {l3.Object});
             l1.Setup(l => l.value).Returns(1);
-            l1.Setup(l => l.GetSons()).Returns(new SortedSet<ILeaf> {l2.Object});
+            l1.Setup(l => l.GetSons()).Returns(new List<ILeaf> {l2.Object});
             l41.Setup(l => l.value).Returns(5);
             l31.Setup(l => l.value).Returns(4);
-            l31.Setup(l => l.GetSons()).Returns(new SortedSet<ILeaf> {l41.Object});
+            l31.Setup(l => l.GetSons()).Returns(new List<ILeaf> {l41.Object});
             l21.Setup(l => l.value).Returns(3);
-            l21.Setup(l => l.GetSons()).Returns(new SortedSet<ILeaf> {l31.Object});
+            l21.Setup(l => l.GetSons()).Returns(new List<ILeaf> {l31.Object});
             l11.Setup(l => l.value).Returns(2);
-            l11.Setup(l => l.GetSons()).Returns(new SortedSet<ILeaf> {l21.Object});
-            return new SortedSet<ILeaf>{l11.Object, l1.Object};
+            l11.Setup(l => l.GetSons()).Returns(new List<ILeaf> {l21.Object});
+            return new List<ILeaf>{l11.Object, l1.Object};
         }).Execute();;
     }
     [Fact]
@@ -68,5 +68,19 @@ public class UnitTest1
         _obj2.Setup(o => o.get_property("Position")).Returns(new Vector(2, 3));
 
         Assert.True(Hwdtech.IoC.Resolve<bool>("Check.Collision.2D", _obj1.Object, _obj2.Object));
+    }
+
+    [Fact]
+     public void Collision_False()
+    {
+        Mock<IUObject> _obj1 = new();
+        _obj1.Setup(o => o.get_property("Velocity")).Returns(new Vector(1, 1));
+        _obj1.Setup(o => o.get_property("Position")).Returns(new Vector(1, 1));
+
+        Mock<IUObject> _obj2 = new();
+        _obj2.Setup(o => o.get_property("Velocity")).Returns(new Vector(4, 5));
+        _obj2.Setup(o => o.get_property("Position")).Returns(new Vector(2, 6));
+
+        Assert.False(Hwdtech.IoC.Resolve<bool>("Check.Collision.2D", _obj1.Object, _obj2.Object));
     }
 }
