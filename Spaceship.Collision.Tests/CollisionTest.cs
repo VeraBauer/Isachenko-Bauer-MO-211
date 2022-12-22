@@ -38,6 +38,9 @@ public class UnitTest1
             Mock<ILeaf> l21 = new();
             Mock<ILeaf> l31 = new();
             Mock<ILeaf> l41 = new();
+            Mock<ILeaf> l5 = new();
+            l5.Setup(l => l.value).Returns(8);
+            l4.Setup(l => l.GetSons()).Returns(new List<ILeaf> {l5.Object});
             l4.Setup(l => l.value).Returns(4);
             l3.Setup(l => l.value).Returns(3);
             l3.Setup(l => l.GetSons()).Returns(new List<ILeaf> {l4.Object});

@@ -13,7 +13,6 @@ public class TreeDesicion
         for(int i = 0; i < 4; i++)
         {
             List<int> currentValues = tree.Select(t => t.value).ToList();
-            if (tree == null) return true;
             for(int j = 0; j < tree.Count; j++)
             {
                 if(currentValues.Contains(values[i]))
