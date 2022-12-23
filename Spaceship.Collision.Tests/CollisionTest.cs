@@ -84,6 +84,6 @@ public class UnitTest1
         _obj2.Setup(o => o.get_property("Velocity")).Returns(new Vector(4, 5));
         _obj2.Setup(o => o.get_property("Position")).Returns(new Vector(2, 6));
 
-        Assert.False(Hwdtech.IoC.Resolve<bool>("Check.Collision.2D", _obj1.Object, _obj2.Object));
+        Assert.False(Hwdtech.IoC.Resolve<bool>("Check.Collision.2D", _obj2.Object, _obj1.Object));
     }
 }
