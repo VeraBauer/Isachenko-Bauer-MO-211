@@ -1,6 +1,7 @@
 using Spaceship__Server;
 using System.Collections.Generic;
 using Hwdtech;
+using Moq;
 
 namespace Spaceship__Server
 {
@@ -30,7 +31,11 @@ namespace Spaceship__Server
 
             ICommand mc = new MoveCommand(movable);
 
-            _queue.Enqueue(mc);
+            Mock<IMacro> macro = new();
+
+            macro.Setup(m => m.jobs).Returns(new List<ICommand> {mc, new PushCommand(mc, _queue)});
+
+            _queue.Enqueue(macro.Object);
         }
     };
 }
