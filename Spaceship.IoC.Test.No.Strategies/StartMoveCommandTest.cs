@@ -40,7 +40,6 @@ public class ContiniousMovement
         
         cmd.Execute();
 
-        Assert.Single(_queue);
-        //Assert.Equal(1, );
+        Assert.Equal(2, _queue.Count);
     }
 }
