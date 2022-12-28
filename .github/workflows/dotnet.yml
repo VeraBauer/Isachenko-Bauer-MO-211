@@ -6,6 +6,7 @@ on:
     branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, ContiniousMovementWithoutStrategies]
   pull_request:
     branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, ContiniousMovementWithoutStrategies]
+
 jobs:
   build:
 
