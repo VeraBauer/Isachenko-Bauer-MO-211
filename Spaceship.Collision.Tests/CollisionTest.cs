@@ -236,7 +236,7 @@ public class CollisionTests
         
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Solution.Tree", (object[] args) => {
  
-            int branch = 4;
+            List<int> branch = new List<int>();
 
             Dictionary<int, object> tree = new(){{12, branch}, {1, branch}};
 
@@ -244,7 +244,7 @@ public class CollisionTests
         }).Execute();
         Mock<IUObject> _obj1 = new();
         _obj1.Setup(o => o.get_property("Velocity")).Returns(new Vector(1, 1));
-        _obj1.Setup(o => o.get_property("Position")).Returns(new Vector(2, 1));
+        _obj1.Setup(o => o.get_property("Position")).Returns(new Vector(1, 1));
 
         Mock<IUObject> _obj2 = new();
         _obj2.Setup(o => o.get_property("Velocity")).Returns(new Vector(4, 5));

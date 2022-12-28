@@ -38,7 +38,6 @@ public class TreeDesicion
             {
                 return false;
             }
-            Console.WriteLine(dimension);
             dimension++;
         } 
 
@@ -46,7 +45,6 @@ public class TreeDesicion
         {   
             throw new Exception();
         }
-        
         return false;
     }
 }
