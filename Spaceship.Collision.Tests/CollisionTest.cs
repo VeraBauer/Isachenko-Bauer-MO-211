@@ -236,7 +236,7 @@ public class CollisionTests
         
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Solution.Tree", (object[] args) => {
  
-            List<int> branch = new List<int>();
+            int branch = 4;
 
             Dictionary<int, object> tree = new(){{12, branch}, {1, branch}};
 
