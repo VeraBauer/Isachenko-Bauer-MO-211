@@ -1,5 +1,6 @@
 using Hwdtech;
 using System.Linq;
+using System;
 using System.Collections.Generic;
 
 namespace Spaceship__Server;
@@ -8,24 +9,44 @@ public class TreeDesicion
 {
     public bool Decide(object[] args)
     {
-        List<ILeaf> tree = (List<ILeaf>) args[0];
-        int [] values = {(int)args[1],(int)args[2],(int)args[3],(int)args[4]};
-        for(int i = 0; i < 4; i++)
+
+        Dictionary<int, object> tree = (Dictionary<int, object>) args[0];
+
+        List<int> deltas = (List<int>) args[1];
+
+        int dimension = 0;
+
+        object difftree = new Dictionary<int, object>();
+
+        while(!(difftree is List<int>))
         {
-            List<int> currentValues = tree.Select(t => t.value).ToList();
-            for(int j = 0; j < tree.Count; j++)
+
+            difftree = null;
+
+            if(tree.TryGetValue(deltas[dimension], out difftree))
             {
-                if(currentValues.Contains(values[i]))
+                if(!(difftree is List<int>))
                 {
-                    if (tree.Find(t => t.value == values[i]).GetSons() == null) return true;
-                    tree = tree.Find(t => t.value == values[i]).GetSons();
+                    tree = (Dictionary<int, object>) difftree;
                 }
                 else
                 {
-                    return false;
+                    difftree = (List<int>) difftree;
                 }
             }
+            else
+            {
+                return false;
+            }
+            Console.WriteLine(dimension);
+            dimension++;
+        } 
+
+        if(((List<int>)difftree).Contains(deltas[dimension]))
+        {   
+            throw new Exception();
         }
-        return true;
+        
+        return false;
     }
 }
