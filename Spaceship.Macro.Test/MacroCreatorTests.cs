@@ -69,23 +69,6 @@ public class MacroBuilderTest
             return adp;
         }).Execute();
 
-        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "ContiniousMovement.Get.Dependencies", (object[] args) =>
-        {
-            List<string> deps = new List<string>{"MoveCommand"};
-            return deps;
-        }).Execute();
-
-        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IoC.MoveCommand", (object[] args) =>
-        {
-            return (Spaceship__Server.ICommand) new MoveCommand(Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.Movable", args));;
-        }).Execute();
-
-        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IoC.CreateMacro", (object[] args) =>
-        {
-            MacroCreator creator = new();
-            return creator.CreateMacro(args);
-        }).Execute();
-
         Mock<IUObject> obj = new();
 
         obj.Setup(o => o.get_property("Position")).Returns(new Vector(2));
