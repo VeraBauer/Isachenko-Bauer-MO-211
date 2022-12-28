@@ -4,7 +4,7 @@ using Hwdtech;
 
 namespace Spaceship__Server
 {
-    public interface IMoveCommandStartable : Spaceship__Server.ICommand
+    public interface IMoveCommandStartable : ICommand
     {
         IUObject _obj {set; get;}
         Vector Velocity{get; set;}
@@ -15,7 +15,8 @@ namespace Spaceship__Server
     {
         public IUObject _obj{set; get;}
         public Vector Velocity{get; set;}
-        public Queue<Spaceship__Server.ICommand> _queue{set;get;}
+        public Queue<Spaceship__Server.ICommand> _queue{set;get;} = new Queue<ICommand>();
+        public List<ICommand> jobs {get; set;} = new List<ICommand>();
         public StartMoveCommand(IUObject order)
         {
             this._obj = (IUObject) order.get_property("Object");
@@ -26,9 +27,17 @@ namespace Spaceship__Server
         {
             this._obj.set_property("Velocity", Velocity);
 
-            ICommand mc = Hwdtech.IoC.Resolve<ICommand>("Adapters.IUObject.MoveCommand", _obj);
+            IMovable movable = Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.IMovable", _obj);
 
-            _queue.Enqueue(mc);
+            ICommand mc = new MoveCommand(movable);
+
+            jobs.Add(mc);
+
+            jobs.Add(new MacroCommand(_queue, new List<ICommand>(){mc}));
+
+            _queue.Enqueue(jobs[0]);
+            
+            _queue.Enqueue(jobs[1]);
         }
     };
 }

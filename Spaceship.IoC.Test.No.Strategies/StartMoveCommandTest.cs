@@ -13,10 +13,9 @@ public class ContiniousMovement
     {
         new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
 
-        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.MoveCommand", (object[] args) => 
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.IMovable", (object[] args) => 
         {
-            Adapter adp = new Adapter();
-            return adp.IUObjectToMoveCommand(args);
+            return new MovableAdapter(args);
         }).Execute();
 
         Mock<IUObject> order = new();
@@ -39,7 +38,6 @@ public class ContiniousMovement
         
         cmd.Execute();
 
-        Assert.Single(_queue);
-        //Assert.Equal(1, );
+        Assert.Equal(2, _queue.Count);
     }
 }
