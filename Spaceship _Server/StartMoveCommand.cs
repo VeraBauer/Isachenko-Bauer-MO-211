@@ -4,7 +4,7 @@ using Hwdtech;
 
 namespace Spaceship__Server
 {
-    public interface IMoveCommandStartable : IMacro
+    public interface IMoveCommandStartable : ICommand
     {
         IUObject _obj {set; get;}
         Vector Velocity{get; set;}
@@ -33,7 +33,7 @@ namespace Spaceship__Server
 
             jobs.Add(mc);
 
-            jobs.Add(new PushCommand(mc, _queue));
+            jobs.Add(new MacroCommand(_queue, new List<ICommand>(){mc}));
 
             _queue.Enqueue(jobs[0]);
             
