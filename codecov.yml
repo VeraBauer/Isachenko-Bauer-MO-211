@@ -1,2 +1,4 @@
+ignore:
+  ["Spaceship.Macro.Test"]
 codecov:
   token: ${{ secrets.CODECOV_TOKEN }}
