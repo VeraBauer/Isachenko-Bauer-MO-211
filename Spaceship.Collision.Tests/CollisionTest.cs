@@ -26,8 +26,8 @@ public class CollisionTests
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.IMovable", (object [] args) => 
         {
-            Adapter adp = new();
-            return  (object)adp.IUObjectToIMovable(args);
+            MovableAdapter adp = new(args);
+            return  (object)adp;
         }).Execute();
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "CalculateDeltas", (object[] args) => {
