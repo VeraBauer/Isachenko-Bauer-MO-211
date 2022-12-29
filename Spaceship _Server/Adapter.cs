@@ -1,4 +1,5 @@
 
+
 namespace Spaceship__Server
 {
         public class MovableAdapter : IMovable

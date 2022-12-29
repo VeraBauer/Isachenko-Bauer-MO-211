@@ -1,4 +1,3 @@
-
 namespace Spaceship__Server
 {
     public interface IUObject
