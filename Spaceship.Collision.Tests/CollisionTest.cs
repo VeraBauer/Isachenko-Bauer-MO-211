@@ -58,8 +58,6 @@ public class CollisionTests
         }).Execute();
         
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Solution.Tree", (object[] args) => {
-            // Дерево реализовано словарями; ключ - значение текущей дельты - первой координаты вектора сравнения, значение - словарь, где ключи - 
-            // все последующие возможные координаты и так далее пока не дойдем до последних координат, где значения - листы последних координат
 
             Dictionary<int, object> branch0 = new(){{1, new List<int>(){1, 2}}, {3, new List<int>(){3, 4, 8}}, {5, new List<int>(){6, 8, 9}}, {6, new List<int>(){9}}};
 
@@ -147,8 +145,6 @@ public class CollisionTests
         }).Execute();
         
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Solution.Tree", (object[] args) => {
-            // Дерево реализовано словарями; ключ - значение текущей дельты - первой координаты вектора сравнения, значение - словарь, где ключи - 
-            // все последующие возможные координаты и так далее пока не дойдем до последних координат, где значения - листы последних координат
 
             Dictionary<int, object> branch0 = new(){{1, new List<int>(){1, 2}}, {3, new List<int>(){3, 4, 8}}, {5, new List<int>(){6, 8, 9}}, {6, new List<int>(){9}}};
 
