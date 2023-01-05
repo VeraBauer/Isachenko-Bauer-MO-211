@@ -47,5 +47,11 @@ namespace Spaceship.IoC.Test.No.Strategies
 
             Assert.Equal("Spaceship__Server.EmptyCommand", ((BridgeCommand)_queue.Peek()).internalCommand.GetType().ToString());
         }
+        [Fact]
+        public void NothingTest()
+        {
+            EmptyCommand cmd = new();
+            cmd.Execute();
+        }
     }
 }
