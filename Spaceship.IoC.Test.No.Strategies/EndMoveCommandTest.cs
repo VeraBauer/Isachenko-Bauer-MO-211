@@ -19,6 +19,7 @@ namespace Spaceship.IoC.Test.No.Strategies
 
             BridgeCommand bridge = new(cmd.Object);
 
+<<<<<<< HEAD
             MacroCommand macro = new(_queue, new List<ICommand>{bridge});
 
             macro.Execute();
@@ -34,6 +35,41 @@ namespace Spaceship.IoC.Test.No.Strategies
             bridge.Inject(new EmptyCommand());
 
             Assert.Equal("Spaceship__Server.EmptyCommand",((BridgeCommand)_queue.Peek()).internalCommand.GetType().ToString());
+=======
+            MacroCommand macro = new(_queue, new List<ICommand> { bridge });
+
+            macro.Execute();
+
+            Assert.Equal(2, _queue.Count);
+
+            Assert.Equal(cmd.Object.GetType(), ((BridgeCommand)_queue.Peek()).internalCommand.GetType());
+
+            _queue.Dequeue().Execute();
+
+            _queue.Dequeue().Execute();
+
+            Mock<IUObject> writ = new();
+
+            writ.Setup(o => o.get_property("Command")).Returns(bridge);
+
+            Mock<IUObject> obj = new();
+
+            obj.Setup(o => o.get_property("Velocity")).Returns(1);
+
+            writ.Setup(o => o.get_property("Object")).Returns(obj.Object);
+
+            EndMoveCommand end = new(writ.Object);
+
+            end.Execute();
+
+            Assert.Equal("Spaceship__Server.EmptyCommand", ((BridgeCommand)_queue.Peek()).internalCommand.GetType().ToString());
+        }
+        [Fact]
+        public void NothingTest()
+        {
+            EmptyCommand cmd = new();
+            cmd.Execute();
+>>>>>>> b96892f04818380f192d8ef595e371319dff47ab
         }
     }
 }
