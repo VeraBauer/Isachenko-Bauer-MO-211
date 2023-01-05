@@ -29,6 +29,7 @@ namespace Spaceship__Server
 
             IMovable movable = Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.IMovable", _obj);
 
+
             ICommand mc = new MoveCommand(movable);
 
             jobs.Add(mc);

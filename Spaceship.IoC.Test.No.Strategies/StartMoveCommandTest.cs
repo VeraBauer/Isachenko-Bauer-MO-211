@@ -19,8 +19,6 @@ public class ContiniousMovement
             return new MovableAdapter(args);
         }).Execute();
 
-        System.Console.WriteLine("aoaoaoaoao\n ADASDASDASDASDASD");
-
         Mock<IUObject> order = new();
 
         Mock<IUObject> _obj = new();
