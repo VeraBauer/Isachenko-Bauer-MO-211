@@ -12,7 +12,7 @@ namespace Spaceship__Server
     }
     public class BridgeCommand: ICommand, IInjectable
     {
-        ICommand internalCommand 
+        public ICommand internalCommand 
         { 
             get; 
             set; 
