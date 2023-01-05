@@ -31,7 +31,19 @@ namespace Spaceship.IoC.Test.No.Strategies
 
             _queue.Dequeue().Execute();
 
-            bridge.Inject(new EmptyCommand());
+            Mock<IUObject> writ = new();
+
+            writ.Setup(o => o.get_property("Command")).Returns(bridge);
+
+            Mock<IUObject> obj = new();
+
+            obj.Setup(o => o.get_property("Velocity")).Returns(1);
+
+            writ.Setup(o => o.get_property("Object")).Returns(obj.Object);
+
+            EndMoveCommand end = new(writ.Object);
+
+            end.Execute();
 
             Assert.Equal("Spaceship__Server.EmptyCommand", ((BridgeCommand)_queue.Peek()).internalCommand.GetType().ToString());
         }
