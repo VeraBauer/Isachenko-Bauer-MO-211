@@ -5,6 +5,7 @@ using Moq;
 
 namespace Spaceship.IoC.Test.No.Strategies;
 
+using System;
 
 public class ContiniousMovement
 {
@@ -17,6 +18,8 @@ public class ContiniousMovement
         {
             return new MovableAdapter(args);
         }).Execute();
+
+        Console.WriteLine("aoaoaoaoao\n ADASDASDASDASDASD");
 
         Mock<IUObject> order = new();
 
