@@ -3,9 +3,9 @@ name: .NET
 on:
   workflow_dispatch:
   push:
-    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, Collision, TreeBuilder ]
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, TreeBuilder, Collision ]
   pull_request:
-    branches: [ Spaceship_Move_Test, Spaceship_Move_Test, master, MacroBuilderSolid, Collision, TreeBuilder ]
+    branches: [ Spaceship_Move_Test, Spaceship_Move_Test, master, MacroBuilderSolid, TreeBuilder, Collision ]
 
 jobs:
   build:
