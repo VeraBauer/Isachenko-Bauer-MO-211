@@ -5,21 +5,22 @@ namespace Spaceship__Server;
 
 public class TreeBuilder
 {
-    public Dictionary<int, object> tree = new();
+    public Dictionary<int, object> tree = null;
 
     public TreeBuilder(object[] args)
     {
         List<string> lis = (List<string>)args[0];
         object Tree = this.tree;
+
         foreach (string str in lis)
         {
-            List<Dictionary<int, object>> dict = new();
             string[] mas = str.Split(' ');
             List<int> list = new List<int>() { };
             foreach (var i in mas)
             {
                 list.Add(Int32.Parse((string)i));
             }
+            Console.WriteLine("Строка разобрана");
             list.Reverse();
             object next = null;
             List<object> sos = new List<object>();
@@ -27,14 +28,14 @@ public class TreeBuilder
             {
                 if (next == null)
                 {
-                    next = i;
+                    next = new List<int>() { i };
                     sos.Add(next);
                 }
                 else
                 {
-                    if (next is int)
+                    if (next is List<int>)
                     {
-                        int prev = (int)next;
+                        List<int> prev = (List<int>)next;
                         next = new Dictionary<int, object>() { { i, prev } };
                         sos.Add(next);
                     }
@@ -46,34 +47,37 @@ public class TreeBuilder
                     }
                 }
             }
-            if (Tree == new List<Dictionary<int, object>>() { })
+            if (tree == null)
             {
-                Tree = new List<Dictionary<int, object>>() { (Dictionary<int, object>)next };
+                this.tree = (Dictionary<int, object>)next;
+                Console.WriteLine("Первое дерево создано");
             }
             else
             {
                 list.Reverse();
                 sos.Reverse();
                 int counter = 0;
+                Console.WriteLine("asdasd");
+                object difftree = new Dictionary<int, object>();
 
-                object treee = new Dictionary<int, object>();
-
-                while (!(treee is int))
+                while (!(difftree is List<int>))
                 {
-                    if (tree.TryGetValue(list[counter], out treee))
+                    if (tree.TryGetValue(list[counter], out difftree))
                     {
-                        if (!(treee is List<int>))
+                        if (!(difftree is List<int>))
                         {
-                            tree = (Dictionary<int, object>)treee;
+                            tree = (Dictionary<int, object>)difftree;
                         }
                         else
                         {
-                            treee = (List<int>)treee;
+                            difftree = (List<int>)difftree;
                         }
                     }
                     else
                     {
-                        tree.Add(counter, sos[counter + 1]);
+                        Console.WriteLine("Добавляю элемент");
+                        tree.Add(list[counter], sos[counter + 1]);
+                        break;
                     }
                     counter++;
                 }
