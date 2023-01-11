@@ -20,7 +20,6 @@ public class TreeBuilder
             {
                 list.Add(Int32.Parse((string)i));
             }
-            Console.WriteLine("Строка разобрана");
             list.Reverse();
             object next = null;
             List<object> sos = new List<object>();
@@ -50,36 +49,42 @@ public class TreeBuilder
             if (tree == null)
             {
                 this.tree = (Dictionary<int, object>)next;
-                Console.WriteLine("Первое дерево создано");
             }
             else
             {
                 list.Reverse();
                 sos.Reverse();
                 int counter = 0;
-                Console.WriteLine("asdasd");
-                object difftree = new Dictionary<int, object>();
+                object treee = new Dictionary<int, object>();
 
-                while (!(difftree is List<int>))
+                bool added = false;
+
+                Dictionary<int, object> copytree = tree;
+
+                while (!(treee is List<int>))
                 {
-                    if (tree.TryGetValue(list[counter], out difftree))
+                    if (copytree.TryGetValue(list[counter], out treee))
                     {
-                        if (!(difftree is List<int>))
+                        if (!(treee is List<int>))
                         {
-                            tree = (Dictionary<int, object>)difftree;
+                            copytree = (Dictionary<int, object>)treee;
                         }
                         else
                         {
-                            difftree = (List<int>)difftree;
+                            treee = (List<int>)treee;
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Добавляю элемент");
-                        tree.Add(list[counter], sos[counter + 1]);
+                        copytree.Add(list[counter], sos[counter + 1]);
+                        added = true;
                         break;
                     }
                     counter++;
+                }
+                if (!added)
+                {
+                    ((List<int>)treee).Add(list[counter]);
                 }
             }
         }

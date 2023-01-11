@@ -63,7 +63,7 @@ public class TreeBuilderTests
         }).Execute();
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Solution.Tree", (object[] args) => {
-            return Hwdtech.IoC.Resolve<Dictionary<int, object>>("BuildTree", new List<string>() { "1 5 6 2", "1 1 1 2", "2 2 2 2", "2 3 4 5", "1 1 2 1", "1 2 4 5" });
+            return Hwdtech.IoC.Resolve<Dictionary<int, object>>("BuildTree", new List<string>() { "1 1 1 1", "1 1 1 2", "1 1 2 2", "1 1 2 1", "1 1 2 4" });
         }).Execute();
 
         Mock<IUObject> _obj1 = new();

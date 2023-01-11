@@ -1,8 +1,8 @@
+namespace Spaceship.Collision.Tests;
+
 using Hwdtech;
 using Spaceship__Server;
 using Moq;
-
-namespace Spaceship.Collision.Tests;
 
 public class CollisionTests
 {   
