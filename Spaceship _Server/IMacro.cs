@@ -19,7 +19,6 @@ public class MacroCommand : ICommand
         {
             _queue.Enqueue(job);
         }
-        _queue.Enqueue(this);
     }
 
     
