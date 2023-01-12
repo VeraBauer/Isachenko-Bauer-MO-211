@@ -13,7 +13,7 @@ public class ContiniousMacroTest
         new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
         Queue<Spaceship__Server.ICommand> _que = new();
 
-        IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", Hwdtech.IoC.Resolve<object>("Scopes.New", Hwdtech.IoC.Resolve<object>("Scopes.Root"))).Execute();
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.Movable", (object[] args) =>
         {
@@ -62,7 +62,7 @@ public class ContiniousMacroTest
 
         obj.Setup(o => o.get_property("Queue")).Returns((object)_queue);
 
-        IoC.Resolve<Spaceship__Server.ICommand>("IoC.CreateMacro", "ContiniousMovement", obj.Object).Execute();
+        Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("IoC.CreateMacro", "ContiniousMovement", obj.Object).Execute();
 
         Assert.Equal(2, _queue.Count);
     }
