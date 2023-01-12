@@ -89,6 +89,6 @@ public class ContiniousMovement
 
         new MacroCommand(_queue, new List<Spaceship__Server.ICommand>(){new MoveCommand(movable)}).Execute();
 
-        Assert.Equal(2, _queue.Count);
+        Assert.Single(_queue);
     }
 }
