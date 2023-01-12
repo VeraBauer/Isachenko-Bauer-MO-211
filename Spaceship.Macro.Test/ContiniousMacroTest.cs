@@ -62,7 +62,7 @@ public class ContiniousMacroTest
 
         obj.Setup(o => o.get_property("Queue")).Returns((object)_queue);
 
-        Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("IoC.CreateMacro", "ContiniousMovement", obj.Object).Execute();
+        Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("IoC.CreateContiniousMacro", "ContiniousMovement", obj.Object).Execute();
 
         Assert.Equal(2, _queue.Count);
     }
