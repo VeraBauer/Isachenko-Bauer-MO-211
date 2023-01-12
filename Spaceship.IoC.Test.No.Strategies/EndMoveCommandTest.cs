@@ -1,35 +1,37 @@
-﻿using System;
-using Spaceship__Server;
+﻿using Spaceship__Server;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spaceship.IoC.Test.No.Strategies
 {
+    using Hwdtech;
     public class EndMoveCommandTest
     {
         [Fact]
         public void EndMoveCommand()
         {
-            Queue<ICommand> _queue = new();
+            new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
+            IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
+            Queue<Spaceship__Server.ICommand> _queue = new();
+            IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Queue", (object[] args) =>
+            {
+                return _queue;
+            }).Execute();
 
-            Mock<ICommand> cmd = new();
+            Mock<Spaceship__Server.ICommand> cmd = new();
 
             BridgeCommand bridge = new(cmd.Object);
 
-            MacroCommand macro = new(_queue, new List<ICommand> { bridge });
+            MacroCommand macro = new(IoC.Resolve<Queue<Spaceship__Server.ICommand>>("Get.Queue"), new List<Spaceship__Server.ICommand> { bridge });
 
             macro.Execute();
 
-            Assert.Equal(2, _queue.Count);
+            Assert.Equal(2, IoC.Resolve<Queue<Spaceship__Server.ICommand>>("Get.Queue").Count);
 
-            Assert.Equal(cmd.Object.GetType(), ((BridgeCommand)_queue.Peek()).internalCommand.GetType());
+            Assert.Equal(cmd.Object.GetType(), ((BridgeCommand)IoC.Resolve<Queue<Spaceship__Server.ICommand>>("Get.Queue").Peek()).internalCommand.GetType());
 
-            _queue.Dequeue().Execute();
+            IoC.Resolve<Queue<Spaceship__Server.ICommand>>("Get.Queue").Dequeue().Execute();
 
-            _queue.Dequeue().Execute();
+            IoC.Resolve<Queue<Spaceship__Server.ICommand>>("Get.Queue").Dequeue().Execute();
 
             Mock<IUObject> writ = new();
 
@@ -45,7 +47,7 @@ namespace Spaceship.IoC.Test.No.Strategies
 
             end.Execute();
 
-            Assert.Equal("Spaceship__Server.EmptyCommand", ((BridgeCommand)_queue.Peek()).internalCommand.GetType().ToString());
+            Assert.Equal("Spaceship__Server.EmptyCommand", ((BridgeCommand)IoC.Resolve<Queue<Spaceship__Server.ICommand>>("Get.Queue").Peek()).internalCommand.GetType().ToString());
         }
         [Fact]
         public void NothingTest()
