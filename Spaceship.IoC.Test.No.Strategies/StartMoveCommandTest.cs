@@ -1,11 +1,11 @@
 using Hwdtech;
 using Spaceship__Server;
-using System;
 using Moq;
 
 namespace Spaceship.IoC.Test.No.Strategies;
 
 using System;
+
 
 public class ContiniousMovement
 {
@@ -38,7 +38,7 @@ public class ContiniousMovement
         StartMoveCommand cmd = new(order.Object);
         
         cmd.Execute();
-
+        
         Assert.Equal(2, _queue.Count);
     }
     [Fact]
@@ -89,6 +89,6 @@ public class ContiniousMovement
 
         new MacroCommand(_queue, new List<Spaceship__Server.ICommand>(){new MoveCommand(movable)}).Execute();
 
-        Assert.Equal(2, _queue.Count);
+        Assert.Single(_queue);
     }
 }
