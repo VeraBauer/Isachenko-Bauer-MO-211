@@ -21,11 +21,15 @@ namespace Spaceship.IoC.Test.No.Strategies
 
             BridgeCommand bridge = new(cmd.Object);
 
-            MacroCommand macro = new(IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue"), new List<Spaceship__Server.ICommand> { bridge });
+            PushCommand pusher = new(bridge);
 
-            new PushCommand(macro).Execute();
+            pusher.Execute();
 
             Assert.Equal(2, IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Count);
+
+            Console.WriteLine(cmd.Object.GetType());
+            Console.WriteLine(((BridgeCommand)IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Peek()).internalCommand.GetType());
+
 
             Assert.Equal(cmd.Object.GetType(), ((BridgeCommand)IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Peek()).internalCommand.GetType());
 
