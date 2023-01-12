@@ -53,7 +53,7 @@ public class MacroBuilderTest
 
         IoC.Resolve<Spaceship__Server.ICommand>("IoC.CreateMacro", "ContiniousMovement", obj.Object).Execute();
 
-        Assert.Equal(2, _queue.Count);
+        Assert.Single(_queue);
     }
 
     [Fact]
