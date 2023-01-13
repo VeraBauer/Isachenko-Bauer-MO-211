@@ -16,16 +16,24 @@ namespace Spaceship.IoC.Test.No.Strategies
             {
                 return _queue;
             }).Execute();
+            IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "DeleteProperty", (object[] args) => {
+                Mock<ICommand> DeletionCommand = new();
+                DeletionCommand.Object.Execute();
+                return (IUObject) args[0];
+            }).Execute();
 
             Mock<Spaceship__Server.ICommand> cmd = new();
 
             BridgeCommand bridge = new(cmd.Object);
 
-            MacroCommand macro = new(IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue"), new List<Spaceship__Server.ICommand> { bridge });
+            PushCommand pusher = new(bridge);
 
-            new PushCommand(macro).Execute();
+            pusher.Execute();
 
             Assert.Equal(2, IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Count);
+
+            Console.WriteLine(cmd.Object.GetType());
+            Console.WriteLine(((BridgeCommand)IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Peek()).internalCommand.GetType());
 
             Assert.Equal(cmd.Object.GetType(), ((BridgeCommand)IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Peek()).internalCommand.GetType());
 
@@ -35,7 +43,11 @@ namespace Spaceship.IoC.Test.No.Strategies
 
             Mock<IUObject> writ = new();
 
-            writ.Setup(o => o.get_property("Command")).Returns(bridge);
+            Mock<IMoveCommandEndable> CmdToEnd= new();
+
+            CmdToEnd.Setup(c => c.EndCommand).Returns(bridge);
+
+            writ.Setup(o => o.get_property("Command")).Returns(CmdToEnd.Object);
 
             Mock<IUObject> obj = new();
 

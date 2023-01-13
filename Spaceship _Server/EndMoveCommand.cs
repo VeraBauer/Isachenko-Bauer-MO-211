@@ -32,7 +32,7 @@ namespace Spaceship__Server
         }
 
     }
-    public interface MoveCommandEndable : ICommand
+    public interface IMoveCommandEndable : ICommand
     {
         BridgeCommand EndCommand
         {
@@ -44,25 +44,26 @@ namespace Spaceship__Server
         }
     }
 
-    public class EndMoveCommand : MoveCommandEndable
+    public class EndMoveCommand : ICommand
     {
-        public BridgeCommand EndCommand
+        public IMoveCommandEndable EndableCommand
         {
             get;
         }
         public IUObject uObject
         {
             get;
+            set;
         }
         public EndMoveCommand(IUObject writ)
         { 
             uObject = (IUObject)writ.get_property("Object");
-            EndCommand = (BridgeCommand)writ.get_property("Command");
+            EndableCommand = (IMoveCommandEndable)writ.get_property("Command");
         }
         public void Execute()
         {
-            uObject.set_property("Velocity", null);
-            EndCommand.Inject(new EmptyCommand());
+            uObject = Hwdtech.IoC.Resolve<IUObject>("DeleteProperty", this.uObject, "Velocity");
+            EndableCommand.EndCommand.Inject(new EmptyCommand());
         }
     }
 
