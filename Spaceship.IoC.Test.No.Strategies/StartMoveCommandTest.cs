@@ -1,9 +1,10 @@
 using Hwdtech;
 using Spaceship__Server;
-using System;
 using Moq;
 
 namespace Spaceship.IoC.Test.No.Strategies;
+
+using System;
 
 
 public class ContiniousMovement
@@ -16,6 +17,7 @@ public class ContiniousMovement
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.IMovable", (object[] args) => 
         {
             return new MovableAdapter(args);
+
         }).Execute();
 
         Mock<IUObject> order = new();
@@ -87,7 +89,7 @@ public class ContiniousMovement
         IMovable movable = Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.Movable", obj.Object);
 
         new MacroCommand(_queue, new List<Spaceship__Server.ICommand>(){new MoveCommand(movable)}).Execute();
-
+        
         Assert.Equal(2, _queue.Count);
     }
 }
