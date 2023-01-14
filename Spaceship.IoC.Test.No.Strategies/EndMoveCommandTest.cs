@@ -35,6 +35,7 @@ namespace Spaceship.IoC.Test.No.Strategies
             Console.WriteLine(cmd.Object.GetType());
             Console.WriteLine(((BridgeCommand)IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Peek()).internalCommand.GetType());
 
+
             Assert.Equal(cmd.Object.GetType(), ((BridgeCommand)IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Peek()).internalCommand.GetType());
 
             IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue").Dequeue().Execute();
