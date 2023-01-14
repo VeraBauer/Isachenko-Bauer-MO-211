@@ -16,6 +16,11 @@ namespace Spaceship.IoC.Test.No.Strategies
             {
                 return _queue;
             }).Execute();
+            IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "DeleteProperty", (object[] args) => {
+                Mock<ICommand> DeletionCommand = new();
+                DeletionCommand.Object.Execute();
+                return (IUObject) args[0];
+            }).Execute();
 
             Mock<Spaceship__Server.ICommand> cmd = new();
 
@@ -39,7 +44,11 @@ namespace Spaceship.IoC.Test.No.Strategies
 
             Mock<IUObject> writ = new();
 
-            writ.Setup(o => o.get_property("Command")).Returns(bridge);
+            Mock<IMoveCommandEndable> CmdToEnd= new();
+
+            CmdToEnd.Setup(c => c.EndCommand).Returns(bridge);
+
+            writ.Setup(o => o.get_property("Command")).Returns(CmdToEnd.Object);
 
             Mock<IUObject> obj = new();
 
