@@ -10,10 +10,9 @@ namespace Spaceship__Server
         {
             string commandname = (string)args[0];
             IUObject obj = (IUObject)args[1];
-            Spaceship__Server.ICommand mcmd= IoC.Resolve<Spaceship__Server.ICommand>("IoC.CreateMacro", commandname, obj);
-            macrocommand = new MacroCommand(Hwdtech.IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue"), 
-            new List<ICommand>(){mcmd, new MacroCommand(Hwdtech.IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue"), 
-            new List<ICommand>(){mcmd})});
+            MacroCommand mcmd= IoC.Resolve<MacroCommand>("IoC.CreateMacro", commandname, obj);
+            mcmd._jobs.Add(new MacroCommand(Hwdtech.IoC.Resolve<Queue<Spaceship__Server.ICommand>>("IoC.GetQueue"), new List<ICommand>(){mcmd}));
+            macrocommand = mcmd;
         }
     }
 }

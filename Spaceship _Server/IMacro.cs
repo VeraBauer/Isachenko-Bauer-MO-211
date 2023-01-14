@@ -5,7 +5,7 @@ namespace Spaceship__Server;
 public class MacroCommand : ICommand
 {
     Queue<Spaceship__Server.ICommand> _queue = new();
-    List<Spaceship__Server.ICommand> _jobs{get; set;}
+    public List<Spaceship__Server.ICommand> _jobs{get; set;}
 
     public MacroCommand(Queue<Spaceship__Server.ICommand> queue, List<Spaceship__Server.ICommand> jobs)
     {
