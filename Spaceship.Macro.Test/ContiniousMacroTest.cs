@@ -15,7 +15,7 @@ public class ContiniousMacroTest
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", Hwdtech.IoC.Resolve<object>("Scopes.New", Hwdtech.IoC.Resolve<object>("Scopes.Root"))).Execute();
 
-        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.Movable", (object[] args) =>
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.IMovable", (object[] args) =>
         {
             MovableAdapter adp = new MovableAdapter(args);
             return adp;
@@ -29,7 +29,7 @@ public class ContiniousMacroTest
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IoC.MoveCommand", (object[] args) =>
         {
-            return (Spaceship__Server.ICommand)new MoveCommand(Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.Movable", args)); ;
+            return (Spaceship__Server.ICommand)new MoveCommand(Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.IMovable", args)); ;
         }).Execute();
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IoC.CreateMacro", (object[] args) =>
