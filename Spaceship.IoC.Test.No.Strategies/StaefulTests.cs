@@ -232,6 +232,8 @@ public class Stateful
 
         MyThread thread = new(rec);
 
+        thread.Start();
+
         Assert.Equal(thread.receiver, rec);
 
         Assert.False(thread.stop);
@@ -253,9 +255,24 @@ public class Stateful
         Assert.Equal(q, snd.queue);
 
         Assert.Equal(q, rec.queue);
+    }
 
+    [Fact]
+    public void HardCodedStopThread()
+    {
+        BlockingCollection<Spaceship__Server.ICommand> q = new();
 
+        IReciver rec = new RecieverAdapter(q);
 
+        MyThread thread = new(rec);
+
+        thread.Start();
+
+        q.Add(new ThreadStopCommand(thread));
+
+        Thread.Sleep(1000);
+
+        Assert.True(thread.stop);
     }
     [Fact]
     public void SendSingleCommandIntoLambdaInitializedThread()

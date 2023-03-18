@@ -55,7 +55,6 @@ public class MyThread
 public interface ISender
 {
     Spaceship__Server.ICommand Send(object message);
-    //sender.setup(s => s.Send(It.IsAny<ICommand>())).Callback<ICommand>((command) => q.send())
 }
 
 public class UpdateBehaviourCommand : Spaceship__Server.ICommand
