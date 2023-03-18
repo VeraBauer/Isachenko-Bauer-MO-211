@@ -6,6 +6,7 @@ using Spaceship__Server;
 
 public class Stateful
 {
+    [Fact]
     public object CreateIoCDependencies()
     {
         new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
