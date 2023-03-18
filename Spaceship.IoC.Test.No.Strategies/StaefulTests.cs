@@ -150,6 +150,48 @@ public class Stateful
     }
 
     [Fact]
+    public void MyThreadCreationUsengRecieverAdapter()
+    {
+        Action action = () => {};
+        BlockingCollection<Spaceship__Server.ICommand> q = new();
+
+        ISender sender = new SenderAdapter(q);
+        IReciver receiver = new RecieverAdapter(q);
+        MyThread thread = new(receiver);
+
+        sender.Send(new ActionCommand(action));
+
+        thread.Start();
+
+        Thread.Sleep(300);
+
+        Assert.Empty(q);
+    }
+
+    [Fact]
+    public void WrongThreadStop()
+    {
+
+
+        BlockingCollection<Spaceship__Server.ICommand> q = new();
+
+        ISender sender = new SenderAdapter(q);
+        IReciver receiver = new RecieverAdapter(q);
+        MyThread thread = new(receiver);
+        MyThread wrongthread = new(receiver);
+
+        Action action = () => {
+            Assert.Throws<Exception>(() => {
+                new HardStopCommand(wrongthread).Execute();
+            });
+        };
+
+        sender.Send(new ActionCommand(action));
+
+        thread.Start();
+    }
+
+    [Fact]
     public void SendSingleCommandIntoLambdaInitializedThread()
     {
         CreateIoCDependencies();
