@@ -224,6 +224,23 @@ public class Stateful
     }
 
     [Fact]
+    public void MyThreadFieldTests()
+    {
+        BlockingCollection<Spaceship__Server.ICommand> q = new();
+
+        IReciver rec = new RecieverAdapter(q);
+
+        MyThread thread = new(rec);
+
+        Assert.Equal(thread.receiver, rec);
+
+        Assert.False(thread.stop);
+
+        Assert.IsType(typeof(Thread), thread.thread);
+
+        Assert.IsType(typeof(Action), thread.strategy);
+    }
+    [Fact]
     public void SendSingleCommandIntoLambdaInitializedThread()
     {
         CreateIoCDependencies();
