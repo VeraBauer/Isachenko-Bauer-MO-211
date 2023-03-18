@@ -273,7 +273,7 @@ public class Stateful
     }
     
     [Fact]
-    public void SoftStopThread()
+    public void SoftStopThreadLambdaless()
     {
         object scope = CreateIoCDependencies();
 
@@ -287,13 +287,41 @@ public class Stateful
     }
 
     [Fact]
-    public void HardStopThread()
+    public void SoftStopThread()
+    {
+        object scope = CreateIoCDependencies();
+
+        MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1", () => {IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", scope).Execute();});
+
+        IoC.Resolve<Spaceship__Server.ICommand>("Soft Stop Thread", "1", () => {}).Execute();
+
+        Thread.Sleep(1000);
+
+        Assert.True(thread.stop);
+    }
+
+    [Fact]
+    public void HardStopThreadLambdaless()
     {
         CreateIoCDependencies();
 
         MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1");
 
         IoC.Resolve<Spaceship__Server.ICommand>("Hard Stop Thread", "1").Execute();
+
+        Thread.Sleep(300);
+
+        Assert.True(thread.stop);
+    }
+
+    [Fact]
+    public void HardStopThread()
+    {
+        CreateIoCDependencies();
+
+        MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1");
+
+        IoC.Resolve<Spaceship__Server.ICommand>("Hard Stop Thread", "1", () => {}).Execute();
 
         Thread.Sleep(300);
 
