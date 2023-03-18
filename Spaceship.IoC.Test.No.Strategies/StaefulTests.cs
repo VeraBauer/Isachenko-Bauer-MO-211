@@ -190,6 +190,21 @@ public class Stateful
 
         thread.Start();
     }
+    [Fact]
+    public void RecieverAdapterTests()
+    {
+        BlockingCollection<Spaceship__Server.ICommand> q = new();
+
+        Mock<Spaceship__Server.ICommand> cmd = new();
+
+        q.Add(cmd.Object);
+
+        IReciver rec = new RecieverAdapter(q);
+
+        Assert.Equal(cmd.Object, rec.Receive());
+
+        Assert.True(rec.isEmpty());
+    }
 
     [Fact]
     public void SendSingleCommandIntoLambdaInitializedThread()
