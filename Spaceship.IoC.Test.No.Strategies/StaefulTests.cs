@@ -240,6 +240,23 @@ public class Stateful
 
         Assert.IsType(typeof(Action), thread.strategy);
     }
+
+    [Fact]
+    public void AdaptersFieldsTest()
+    {
+        BlockingCollection<Spaceship__Server.ICommand> q = new();
+
+        RecieverAdapter rec = new RecieverAdapter(q);
+
+        SenderAdapter snd = new SenderAdapter(q);
+
+        Assert.Equal(q, snd.queue);
+
+        Assert.Equal(q, rec.queue);
+
+
+
+    }
     [Fact]
     public void SendSingleCommandIntoLambdaInitializedThread()
     {
