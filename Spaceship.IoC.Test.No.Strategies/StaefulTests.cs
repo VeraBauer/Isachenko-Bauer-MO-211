@@ -6,11 +6,13 @@ using Spaceship__Server;
 
 public class Stateful
 {
-    public void CreateIoCDependencies()
+    public object CreateIoCDependencies()
     {
         new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
 
-        IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
+        var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
+
+        IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", scope).Execute();
 
         Dictionary<string, MyThread> GameThreads = new();
 
@@ -143,8 +145,7 @@ public class Stateful
             }
         }).Execute();
 
-        
-        Console.WriteLine("Registered Deps!");
+        return scope;
     }
 
     [Fact]
@@ -203,11 +204,15 @@ public class Stateful
     [Fact]
     public void SoftStopThread()
     {
-        CreateIoCDependencies();
+        object scope = CreateIoCDependencies();
 
-        MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1", () => {CreateIoCDependencies(); Thread.Sleep(1000);});
+        MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1", () => {IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", scope).Execute();});
 
         IoC.Resolve<Spaceship__Server.ICommand>("Soft Stop Thread", "1").Execute();
+
+        Thread.Sleep(1000);
+
+        Assert.True(thread.stop);
     }
 
     [Fact]
@@ -218,5 +223,9 @@ public class Stateful
         MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1");
 
         IoC.Resolve<Spaceship__Server.ICommand>("Hard Stop Thread", "1").Execute();
+
+        Thread.Sleep(300);
+
+        Assert.True(thread.stop);
     }
 }

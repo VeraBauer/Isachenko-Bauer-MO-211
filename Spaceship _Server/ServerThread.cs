@@ -17,7 +17,7 @@ public class MyThread
 {
     public Thread thread;
     public IReciver receiver;
-    bool stop = false;
+    public bool stop = false;
     public Action strategy;
 
     internal void Stop() => stop = true;

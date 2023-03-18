@@ -29,7 +29,6 @@ public class SoftStopCommand : ICommand
 
     public void Execute()
     {
-        Console.WriteLine("Trying!");
         string id = Hwdtech.IoC.Resolve<string>("Get id by thread", thread);
 
         Console.WriteLine(id);
