@@ -155,8 +155,6 @@ public class Stateful
 
         MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1", () => {});
 
-        //Mock<Spaceship__Server.ICommand> cmd = new();
-
         ActionCommand cmd =  new(() => {Thread.Sleep(1000);});
 
         IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
@@ -181,8 +179,6 @@ public class Stateful
         CreateIoCDependencies();
 
         MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1");
-
-        //Mock<Spaceship__Server.ICommand> cmd = new();
 
         ActionCommand cmd =  new(() => {Thread.Sleep(1000);});
 

@@ -31,8 +31,6 @@ public class SoftStopCommand : ICommand
     {
         string id = Hwdtech.IoC.Resolve<string>("Get id by thread", thread);
 
-        Console.WriteLine(id);
-
         Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", new HardStopCommand(thread)).Execute();
     }
 }
