@@ -171,25 +171,30 @@ public class Stateful
     [Fact]
     public void WrongThreadStop()
     {
-
+        CreateIoCDependencies();
 
         BlockingCollection<Spaceship__Server.ICommand> q = new();
+        BlockingCollection<Spaceship__Server.ICommand> q1 = new();
 
-        ISender sender = new SenderAdapter(q);
+
         IReciver receiver = new RecieverAdapter(q);
+        IReciver receiver1 = new RecieverAdapter(q);
         MyThread thread = new(receiver);
-        MyThread wrongthread = new(receiver);
+        MyThread wrongthread = new(receiver1);
 
         Action action = () => {
             Assert.Throws<Exception>(() => {
-                new HardStopCommand(wrongthread).Execute();
+            new HardStopCommand(wrongthread).Execute();
             });
         };
 
-        sender.Send(new ActionCommand(action));
+        q.Add(new ActionCommand(action));
 
         thread.Start();
+
+        Thread.Sleep(500);
     }
+    
     [Fact]
     public void RecieverAdapterTests()
     {
