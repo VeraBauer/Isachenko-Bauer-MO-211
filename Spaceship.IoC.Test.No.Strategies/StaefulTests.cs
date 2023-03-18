@@ -207,6 +207,23 @@ public class Stateful
     }
 
     [Fact]
+    public void SenderAdapterTests()
+    {
+        BlockingCollection<Spaceship__Server.ICommand> q = new();
+
+        Mock<Spaceship__Server.ICommand> cmd = new();
+
+        ISender rec = new SenderAdapter(q);
+
+        Assert.Empty(q);
+
+        rec.Send(cmd.Object).Execute();
+
+        Assert.Single(q);
+
+    }
+
+    [Fact]
     public void SendSingleCommandIntoLambdaInitializedThread()
     {
         CreateIoCDependencies();
