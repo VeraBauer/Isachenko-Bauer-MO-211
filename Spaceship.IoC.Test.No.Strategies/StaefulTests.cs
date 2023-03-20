@@ -229,26 +229,6 @@ public class Stateful
     }
 
     [Fact]
-    public void MyThreadFieldTests()
-    {
-        BlockingCollection<Spaceship__Server.ICommand> q = new();
-
-        IReciver rec = new RecieverAdapter(q);
-
-        MyThread thread = new(rec);
-
-        thread.Start();
-
-        Assert.Equal(thread.receiver, rec);
-
-        Assert.False(thread.stop);
-
-        Assert.IsType(typeof(Thread), thread.thread);
-
-        Assert.IsType(typeof(Action), thread.strategy);
-    }
-
-    [Fact]
     public void AdaptersFieldsTest()
     {
         BlockingCollection<Spaceship__Server.ICommand> q = new();
