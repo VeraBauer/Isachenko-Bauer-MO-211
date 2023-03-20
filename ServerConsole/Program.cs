@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Hwdtech;
 using Spaceship__Server;
 using Moq;
+using System.IO;
 
 class Program
 {
@@ -40,13 +41,17 @@ class Program
             Mock<Spaceship__Server.ICommand> cmd = new();
             return cmd.Object;
         }).Execute();
-        Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("ExceptionHandler.Register", "Soft Stop", "System.Exeption", ()=>
-        {
-            Console.WriteLine("Exception Handled");
-        }).Execute();
+        //Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("ExceptionHandler.Register", "Soft Stop", "System.Exeption", ()=>
+        //{
+            StreamWriter sw = new StreamWriter("Soft Stop Exception.txt");
+            sw.WriteLine("Soft Stop, System.Exeption");
+            sw.Close();
+        //}).Execute();
         Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("ExceptionHandler.Register", "Hard Stop", "System.Exeption", ()=>
         {
-            Console.WriteLine("Exception Handled");
+            StreamWriter sw = new StreamWriter("Hard Stop Exception.txt");
+            sw.WriteLine("Hard Stop, System.Exeption");
+            sw.Close();
         }).Execute();
         var threadNum = new Option<string>(name: "--threads") {IsRequired = true};
         var rootCommand = new RootCommand();
