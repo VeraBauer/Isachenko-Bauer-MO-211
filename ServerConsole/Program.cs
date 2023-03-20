@@ -25,10 +25,28 @@ class Program
             return action;
             
         }).Execute();
-        Hwdteh.IoC.Resolve<Hwdteh.ICommand>("IoC.Register", "ExceptionHandler.Register", (object[] args)=>
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Hard Stop Thread", (object[] args)=> 
         {
-
-
+            Action action = (Action)args[1];
+            action();
+            return action;
+            
+        }).Execute();
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "ExceptionHandler.Register", (object[] args)=>
+        {
+            string commandName = (string) args[0];
+            string Exception = (string) args[1];
+            Action strategy = (Action) args[2]; 
+            Mock<Spaceship__Server.ICommand> cmd = new();
+            return cmd.Object;
+        }).Execute();
+        Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("ExceptionHandler.Register", "Soft Stop", "System.Exeption", ()=>
+        {
+            Console.WriteLine("Exception Handled");
+        }).Execute();
+        Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("ExceptionHandler.Register", "Hard Stop", "System.Exeption", ()=>
+        {
+            Console.WriteLine("Exception Handled");
         }).Execute();
         var threadNum = new Option<string>(name: "--threads") {IsRequired = true};
         var rootCommand = new RootCommand();
