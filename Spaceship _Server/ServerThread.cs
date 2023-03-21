@@ -1,16 +1,7 @@
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using Hwdtech;
 namespace Spaceship__Server;
-
-
-public interface IReciver
-{
-    ICommand Receive();
-    bool isEmpty();
-}
 
 public class MyThread
 {
@@ -48,77 +39,5 @@ public class MyThread
     public void Start()
     {
         thread.Start();
-    }
-}
-
-public interface ISender
-{
-    Spaceship__Server.ICommand Send(object message);
-}
-
-public class UpdateBehaviourCommand : Spaceship__Server.ICommand
-{
-    Action behaviour;
-    MyThread thread;
-
-    public UpdateBehaviourCommand(MyThread thread, Action newBehaviour)
-    {
-        this.behaviour = newBehaviour;
-        this.thread = thread;
-    }
-    public void Execute()
-    {
-        thread.UpdateBehaviour(this.behaviour);
-    }
-}
-
-public class ThreadStopCommand : Spaceship__Server.ICommand
-{
-    MyThread stoppingThread;
-    public ThreadStopCommand(MyThread stoppingThread) => this.stoppingThread = stoppingThread;
-
-    public void Execute()
-    {
-        if (Thread.CurrentThread == stoppingThread.thread)
-        {
-            stoppingThread.Stop();
-        }
-        else
-        {
-            throw new Exception();
-        }
-    }
-}
-
-public class RecieverAdapter : IReciver
-{
-    public BlockingCollection<Spaceship__Server.ICommand> queue;
-
-    public RecieverAdapter(BlockingCollection<Spaceship__Server.ICommand> queue) => this.queue = queue;
-
-    public Spaceship__Server.ICommand Receive()
-    {
-        return queue.Take();
-    }
-
-    public bool isEmpty()
-    {
-        return queue.Count == 0;
-    }
-}
-
-public class SenderAdapter : ISender
-{
-    public BlockingCollection<Spaceship__Server.ICommand> queue;
-
-    public SenderAdapter(BlockingCollection<Spaceship__Server.ICommand> queue) => this.queue = queue;
-
-    public Spaceship__Server.ICommand Send(object msg)
-    {
-        Spaceship__Server.ICommand cmd = IoC.Resolve<Spaceship__Server.ICommand>("Message deserialize", msg);
-        
-        BCPushCommand pusher = new(queue, new List<Spaceship__Server.ICommand>(){cmd});
-
-        return pusher;
     }
 }
