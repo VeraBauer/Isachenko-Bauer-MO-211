@@ -1,16 +1,14 @@
+using System;
+
 namespace Spaceship__Server;
 public interface IThread
 {
-    public Thread thread;
-    public IReciver receiver;
-    public bool stop = false;
-    public Action strategy;
 
-    internal void Stop();
+    void Stop();
 
-    internal void HandleCommand();
+    void HandleCommand();
     
-    internal void UpdateBehaviour(Action newBehaviour);
-    public void Start();
-    
+    void UpdateBehaviour(Action newBehaviour);
+
+    void Start();
 }
