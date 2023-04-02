@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +32,7 @@ namespace Spaceship__Server
         }
 
     }
-    public interface IMoveCommandEndable : ICommand
+    public interface MoveCommandEndable : ICommand
     {
         BridgeCommand EndCommand
         {
@@ -44,26 +44,25 @@ namespace Spaceship__Server
         }
     }
 
-    public class EndMoveCommand : ICommand
+    public class EndMoveCommand : MoveCommandEndable
     {
-        public IMoveCommandEndable EndableCommand
+        public BridgeCommand EndCommand
         {
             get;
         }
         public IUObject uObject
         {
             get;
-            set;
         }
         public EndMoveCommand(IUObject writ)
         { 
             uObject = (IUObject)writ.get_property("Object");
-            EndableCommand = (IMoveCommandEndable)writ.get_property("Command");
+            EndCommand = (BridgeCommand)writ.get_property("Command");
         }
         public void Execute()
         {
-            uObject = Hwdtech.IoC.Resolve<IUObject>("DeleteProperty", this.uObject, "Velocity");
-            EndableCommand.EndCommand.Inject(new EmptyCommand());
+            uObject.set_property("Velocity", null);
+            EndCommand.Inject(new EmptyCommand());
         }
     }
 
