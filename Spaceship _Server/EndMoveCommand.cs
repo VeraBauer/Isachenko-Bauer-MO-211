@@ -62,7 +62,7 @@ namespace Spaceship__Server
         }
         public void Execute()
         {
-            uObject.set_property("Velocity", null);
+            uObject = Hwdtech.IoC.Resolve<IUObject>("DeleteProperty", this.uObject, "Velocity");
             EndableCommand.EndCommand.Inject(new EmptyCommand());
         }
     }
