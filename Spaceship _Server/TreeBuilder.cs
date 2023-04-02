@@ -10,15 +10,14 @@ public class TreeBuilder
     public TreeBuilder(object[] args)
     {
         List<string> lis = (List<string>)args[0];
-        object Tree = this.tree;
 
         foreach (string str in lis)
         {
             string[] mas = str.Split(' ');
             List<int> list = new List<int>() { };
-            foreach (var i in mas)
+            foreach (string i in mas)
             {
-                list.Add(Int32.Parse((string)i));
+                list.Add(Int32.Parse(i));
             }
             list.Reverse();
             object next = null;
