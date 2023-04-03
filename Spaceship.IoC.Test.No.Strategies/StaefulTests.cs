@@ -303,9 +303,23 @@ public class Stateful
 
         Assert.True(thread.stop);
         Assert.True(thread2.stop);
-
     }
 
+    [Fact]
+    public void SoftStopAction()
+    {
+        BlockingCollection<Spaceship__Server.ICommand> q = new();
+
+        IReciver ra = new RecieverAdapter(q);
+
+        MyThread thread = new(ra);
+
+        Action act = () => {};
+
+        SoftStopCommand ssc = new(thread, act);
+
+        Assert.Equal(act, ssc._action);
+    }
     [Fact]
     public void HardStopThread()
     {

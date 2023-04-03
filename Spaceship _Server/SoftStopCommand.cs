@@ -7,7 +7,7 @@ using Hwdtech;
 public class SoftStopCommand : ICommand
 {
     MyThread _thread;
-    Action _action = () => {};
+    public Action _action = () => {};
 
     public SoftStopCommand(MyThread threadtostop)
     {
