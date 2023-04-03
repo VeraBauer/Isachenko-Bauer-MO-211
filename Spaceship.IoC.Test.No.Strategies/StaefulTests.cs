@@ -288,14 +288,13 @@ public class Stateful
         IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
         IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
         IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
+        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
+        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
+        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
+        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
 
-        IoC.Resolve<Spaceship__Server.ICommand>("Soft Stop Thread", "1", () => {waiter.Set();}).Execute();
         IoC.Resolve<Spaceship__Server.ICommand>("Soft Stop Thread", "2").Execute();
-
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
+        IoC.Resolve<Spaceship__Server.ICommand>("Soft Stop Thread", "1", () => {waiter.Set();}).Execute();        
 
         Assert.False(thread.stop);
         Assert.False(thread2.stop);
