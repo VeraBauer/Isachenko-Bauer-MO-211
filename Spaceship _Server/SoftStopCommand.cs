@@ -29,10 +29,10 @@ public class SoftStopCommand : ICommand
             {  
                 _thread.HandleCommand();
             }
-            else{
+            else
+            {
                 Hwdtech.IoC.Resolve<ICommand>("Send Command", id, Hwdtech.IoC.Resolve<ICommand>("Hard Stop Thread", id, this._action)).Execute();
             }
-            
         }).Execute();
     }
 }
