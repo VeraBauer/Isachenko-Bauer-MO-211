@@ -322,11 +322,11 @@ public class Stateful
 
         MyThread thread = new(ra);
 
-        Action act = () => {};
+        SoftStopCommand ssc = new(thread);
 
-        SoftStopCommand ssc = new(thread, act);
+        SoftStopCommand ssc2 = new(thread);
 
-        Assert.Equal(act, ssc._action);
+        Assert.Equal(ssc2.GetAction(), ssc.GetAction());
     }
     [Fact]
     public void HardStopThread()

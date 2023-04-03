@@ -7,17 +7,23 @@ using Hwdtech;
 public class SoftStopCommand : ICommand
 {
     MyThread _thread;
-    public Action _action = () => {};
+    Action _action;
 
     public SoftStopCommand(MyThread threadtostop)
     {
         this._thread = threadtostop;
+        this._action = () => {};
+
     }
 
     public SoftStopCommand(MyThread threadtostop, Action action)
     {
         this._thread = threadtostop;
         this._action = action;
+    }
+
+    public Action GetAction(){
+        return this._action;
     }
 
     public void Execute()
