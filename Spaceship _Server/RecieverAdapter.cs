@@ -18,6 +18,6 @@ public class RecieverAdapter : IReciver
 
     public bool isEmpty()
     {
-        return queue.Count == 0;
+        return (queue.Count == 0);
     }
 }

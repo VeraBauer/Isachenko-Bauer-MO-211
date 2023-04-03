@@ -6,27 +6,33 @@ using Hwdtech;
 
 public class SoftStopCommand : ICommand
 {
-    MyThread thread;
+    MyThread _thread;
+    Action _action = () => {};
 
     public SoftStopCommand(MyThread threadtostop)
     {
-        this.thread = threadtostop;
+        this._thread = threadtostop;
+    }
+
+    public SoftStopCommand(MyThread threadtostop, Action action)
+    {
+        this._thread = threadtostop;
+        this._action = action;
     }
 
     public void Execute()
     {
-        string id = Hwdtech.IoC.Resolve<string>("Get id by thread", thread);
+        string id = Hwdtech.IoC.Resolve<string>("Get id by thread", _thread);
 
-        new UpdateBehaviourCommand(thread, () => {
-            while(!thread.receiver.isEmpty())
-            {
-                while(!thread.stop)
-                {
-                    thread.HandleCommand();
-                }
+        new UpdateBehaviourCommand(_thread, () => {
+            if(!(_thread.receiver.isEmpty()))
+            {  
+                _thread.HandleCommand();
             }
-            Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("Send Command", id, new HardStopCommand(thread)).Execute();
-
+            else{
+                Hwdtech.IoC.Resolve<ICommand>("Send Command", id, Hwdtech.IoC.Resolve<ICommand>("Hard Stop Thread", id, this._action)).Execute();
+            }
+            
         }).Execute();
     }
 }
