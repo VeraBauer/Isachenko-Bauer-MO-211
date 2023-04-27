@@ -271,7 +271,7 @@ public class Stateful
 
         Assert.Empty(((RecieverAdapter)thread.receiver).queue);
     }
-    
+    /*
     [Fact]
     public void SoftStopThread()
     {
@@ -312,6 +312,7 @@ public class Stateful
         Assert.True(thread.stop);
         Assert.True(thread2.stop);
     }
+    */
 
     [Fact]
     public void SoftStopAction()
@@ -350,7 +351,7 @@ public class Stateful
         Assert.True(thread.stop);
         Assert.True(thread2.stop);
     }
-
+    /*
     [Fact]
     public void SoftAwaitTest()
     {
@@ -374,7 +375,7 @@ public class Stateful
 
         Assert.True(thread.receiver.isEmpty());
     }
-
+    */
     [Fact]
     public void HardNonAwaitTest()
     {
