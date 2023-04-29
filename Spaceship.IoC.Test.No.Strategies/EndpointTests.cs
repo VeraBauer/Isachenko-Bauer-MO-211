@@ -4,7 +4,11 @@ using Moq;
 using Hwdtech;
 using Spaceship__Server;
 using System.Threading;
-
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 
 public class EndTests
 {
@@ -463,6 +467,21 @@ public class EndTests
         Endpoint.Init();
 
         Assert.IsType<MyThread>(Hwdtech.IoC.Resolve<MyThread>("Get thread by id", "2"));
+    }
+
+    [Fact]
+    public void ContractTest()
+    {
+        JSONContract dto =  new();
+        MemoryStream mem = new MemoryStream();
+        try
+        {
+            JsonSerializer.Serialize(dto);
+        }
+        catch (Exception ex)
+        {
+            Assert.Empty(ex.Message);
+        }
     }
 }
 // Идея создать эндпоинт который будет регистроровать зависимости как для тестов и вызывать его до вызова команд с мессаджами
