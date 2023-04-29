@@ -476,7 +476,8 @@ public class EndTests
         MemoryStream mem = new MemoryStream();
         try
         {
-            JsonSerializer.Serialize(dto);
+            var serobj = JsonSerializer.Serialize(dto);
+            var jsonobj = JsonSerializer.Deserialize<JSONContract>(serobj);
         }
         catch (Exception ex)
         {
