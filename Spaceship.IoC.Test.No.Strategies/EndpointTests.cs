@@ -474,7 +474,14 @@ public class EndTests
     [Fact]
     public void ContractTest()
     {
+        Dictionary<string, object> ValueDictionary = new(){{"type", "Shoot"}, {"gameid", "1"}, {"objid", "obj123"}, {"thread", "2"}};
+
         JSONContract dto =  new();
+
+        JsonDictionary jd = new(ValueDictionary);
+
+        dto.Value = jd;
+
         MemoryStream mem = new MemoryStream();
         try
         {
