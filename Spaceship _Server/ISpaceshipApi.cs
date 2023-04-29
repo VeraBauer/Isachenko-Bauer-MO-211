@@ -17,6 +17,11 @@ namespace Spaceship__Server
         [OpenApiResponse(ContentTypes = new[] { "application/json" }, Description = "Success", StatusCode = HttpStatusCode.OK, Type = typeof(string))]
         JSONContract Message(
             [OpenApiParameter(ContentTypes = new[] { "application/json" }, Description = "Message description.")] JSONContract req);
-
+            
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/init", RequestFormat = WebMessageFormat.Json)]
+        [OpenApiTag("Tag")]
+        [OpenApiResponse(ContentTypes = new[] { "application/json" }, Description = "Success", StatusCode = HttpStatusCode.OK, Type = typeof(string))]
+        void Init();
     }
 }

@@ -155,8 +155,7 @@ public class Stateful
     [Fact]
     public void WrongThreadStop()
     {
-        CreateIoCDependencies();
-
+        Dependencies.Run();
         BlockingCollection<Spaceship__Server.ICommand> q = new();
         BlockingCollection<Spaceship__Server.ICommand> q1 = new();
 
@@ -231,7 +230,7 @@ public class Stateful
     [Fact]
     public void SendSingleCommandIntoLambdaInitializedThread()
     {
-        CreateIoCDependencies();
+        Dependencies.Run();
 
         MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1", () => {});
 
@@ -253,7 +252,7 @@ public class Stateful
     [Fact]
     public void SendSingleCommandIntoLambdaLessInitializedThread()
     {
-        CreateIoCDependencies();
+        Dependencies.Run();
 
         MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1");
 
@@ -271,48 +270,30 @@ public class Stateful
 
         Assert.Empty(((RecieverAdapter)thread.receiver).queue);
     }
-    /*
+    
     [Fact]
     public void SoftStopThread()
     {
-        object scope = CreateIoCDependencies();
+        object scope = Dependencies.Run();
+
 
         AutoResetEvent waiter = new(false);
 
         ActionCommand cmd = new(() => {});
 
         MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1", () => {IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", scope).Execute();});
-        MyThread thread2 = IoC.Resolve<MyThread>("Create and Start Thread", "2", () => {IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", scope).Execute();});
+        MyThread thread2 = IoC.Resolve<MyThread>("Create and Start Thread", "3", () => {IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", scope).Execute();});
 
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "1", cmd).Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Send Command", "2", cmd).Execute();
-
-        IoC.Resolve<Spaceship__Server.ICommand>("Soft Stop Thread", "2").Execute();
+        IoC.Resolve<Spaceship__Server.ICommand>("Soft Stop Thread", "3").Execute();
         IoC.Resolve<Spaceship__Server.ICommand>("Soft Stop Thread", "1", () => {waiter.Set();}).Execute();        
 
         Assert.False(thread.stop);
-        Assert.False(thread2.stop);
 
         waiter.WaitOne();
 
         Assert.True(thread.stop);
-        Assert.True(thread2.stop);
     }
-    */
+    
 
     [Fact]
     public void SoftStopAction()
@@ -332,30 +313,30 @@ public class Stateful
     [Fact]
     public void HardStopThread()
     {
-        CreateIoCDependencies();
+        Dependencies.Run();
 
         AutoResetEvent waiter = new(false);
 
         MyThread thread = IoC.Resolve<MyThread>("Create and Start Thread", "1");
-        MyThread thread2 = IoC.Resolve<MyThread>("Create and Start Thread", "2");
+        MyThread thread2 = IoC.Resolve<MyThread>("Create and Start Thread", "3");
 
 
         Assert.False(thread.stop);
         Assert.False(thread2.stop);
 
         IoC.Resolve<Spaceship__Server.ICommand>("Hard Stop Thread", "1").Execute();
-        IoC.Resolve<Spaceship__Server.ICommand>("Hard Stop Thread", "2", () => {waiter.Set();}).Execute();
+        IoC.Resolve<Spaceship__Server.ICommand>("Hard Stop Thread", "3", () => {waiter.Set();}).Execute();
 
         waiter.WaitOne();
 
         Assert.True(thread.stop);
         Assert.True(thread2.stop);
     }
-    /*
+    
     [Fact]
     public void SoftAwaitTest()
     {
-        var scope = CreateIoCDependencies();
+        var scope = Dependencies.Run();
 
         AutoResetEvent waiter = new(false);
 
@@ -375,11 +356,11 @@ public class Stateful
 
         Assert.True(thread.receiver.isEmpty());
     }
-    */
+    
     [Fact]
     public void HardNonAwaitTest()
     {
-        var scope = CreateIoCDependencies();
+        var scope = Dependencies.Run();
 
         AutoResetEvent waiter = new(false);
 

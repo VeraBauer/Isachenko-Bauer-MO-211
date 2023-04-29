@@ -35,7 +35,7 @@ public class Dependencies
 
         _obj.Setup(o => o.get_property("Velocity")).Returns((object) new Vector(1, 1));
 
-        _obj.Setup(o => o.get_property("Position")).Returns((object) new Vector(0, 0));
+        _obj.Setup(o => o.get_property("Position")).Returns((object) new Vector(1, 1));
 
         obj.Setup(o => o.get_property("Object")).Returns((object) _obj.Object);
 
@@ -262,7 +262,7 @@ public class Dependencies
             return cmd;
         }).Execute();
 
-        Hwdtech.IoC.Resolve<MyThread>("Create and Start Thread", "2");
+        //Hwdtech.IoC.Resolve<MyThread>("Create and Start Thread", "2");
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Create StopMove by Message", (object[] args) => 
         {

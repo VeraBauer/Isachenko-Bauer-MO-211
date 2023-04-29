@@ -10,14 +10,19 @@ namespace Spaceship__Server
     public class SpaceshipApi : ISpaceshipApi
     {
         public JSONContract Message(JSONContract req)
-        {   
-            Dependencies.Run();
-            
+        {               
             Dictionary<string, object> content = (Dictionary<string, object>)req.Value.Entries;
 
             Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("Deserialize Message to Command", content).Execute();
 
            return req;
+        }
+
+        public void Init()
+        {               
+            Dependencies.Run();
+
+            Hwdtech.IoC.Resolve<MyThread>("Create and Start Thread", "2");
         }
     }
 }

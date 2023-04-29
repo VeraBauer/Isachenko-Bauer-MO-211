@@ -75,8 +75,8 @@ public class EndTests
 
                 thread.Start();
 
-                GameThreads.Add(id, thread);
-                GameSenders.Add(id, sender);
+                GameThreads.TryAdd(id, thread);
+                GameSenders.TryAdd(id, sender);
 
                 return thread;
             }
@@ -90,8 +90,8 @@ public class EndTests
 
                 thread.Start();
 
-                GameThreads.Add(id, thread);
-                GameSenders.Add(id, sender);
+                GameThreads.TryAdd(id, thread);
+                GameSenders.TryAdd(id, sender);
 
                 return thread;
             }
@@ -310,7 +310,7 @@ public class EndTests
     [Fact]
     public void CreateMoveCommand()
     {
-        var scope = CreateIoCDependencies();
+        var scope = Dependencies.Run();
 
         Dictionary<string, object> ValueDictionary = new(){{"type", "StartMove"}, {"gameid", "1"}, {"objid", "obj123"}, {"thread", "2"}, {"velocity", 1}};
 
@@ -326,7 +326,7 @@ public class EndTests
 
         IUObject obj = Hwdtech.IoC.Resolve<IUObject>("Get Object by ids", "1", "obj123");
 
-        Assert.Equal(new Vector(1, 1), (Vector)obj.get_property("Velocity"));
+        Assert.Equal(new Vector(1, 1), (Vector)((IUObject)obj.get_property("Object")).get_property("Velocity"));
 
         AutoResetEvent waiter = new(false);
 
@@ -341,13 +341,13 @@ public class EndTests
 
         waiter.WaitOne();
 
-        Assert.Equal(new Vector(1, 1), (Vector)obj.get_property("Position"));
+        Assert.Equal(new Vector(1, 1), (Vector)((IUObject)obj.get_property("Object")).get_property("Position"));
     }
 
     [Fact]
     public void CreateStopCommand()
     {
-        var scope = CreateIoCDependencies();
+        var scope = Dependencies.Run();
 
         Dictionary<string, object> ValueDictionary = new(){{"type", "StopMove"}, {"gameid", "1"}, {"objid", "obj123"}, {"thread", "2"}};
 
@@ -385,7 +385,7 @@ public class EndTests
     [Fact]
     public void CreateRotateCommand()
     {
-        var scope = CreateIoCDependencies();
+        var scope = Dependencies.Run();
 
         Dictionary<string, object> ValueDictionary = new(){{"type", "StartRotate"}, {"gameid", "1"}, {"objid", "obj123"}, {"thread", "2"}};
 
@@ -422,7 +422,7 @@ public class EndTests
     [Fact]
     public void CreateShootCommand()
     {
-        var scope = CreateIoCDependencies();
+        var scope = Dependencies.Run();
 
         Dictionary<string, object> ValueDictionary = new(){{"type", "Shoot"}, {"gameid", "1"}, {"objid", "obj123"}, {"thread", "2"}};
 
@@ -456,3 +456,4 @@ public class EndTests
         waiter123.Set();
     }
 }
+// Идея создать эндпоинт который будет регистроровать зависимости как для тестов и вызывать его до вызова команд с мессаджами
