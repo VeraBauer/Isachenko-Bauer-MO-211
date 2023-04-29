@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.Xml;
 using Spaceship__Server;
 using Spaceship.IoC.Test.No.Strategies;
+using WebHttp;
 internal sealed class Startup
 {
     public void ConfigureServices(IServiceCollection services)
@@ -60,6 +61,18 @@ internal sealed class Startup
                 {
                     Mode = WebHttpSecurityMode.Transport
                 },
+                MaxReceivedMessageSize = 5242880,
+                MaxBufferSize = 65536,
+                ReaderQuotas = readerQuoates
+            }, "api", behavior =>
+            {
+                behavior.HelpEnabled = true;
+                behavior.AutomaticFormatSelectionEnabled = true;
+            });
+            
+            builder.AddService<IoCApi>();
+            builder.AddServiceWebEndpoint<IoCApi, IIoCApi>(new WebHttpBinding
+            {
                 MaxReceivedMessageSize = 5242880,
                 MaxBufferSize = 65536,
                 ReaderQuotas = readerQuoates
