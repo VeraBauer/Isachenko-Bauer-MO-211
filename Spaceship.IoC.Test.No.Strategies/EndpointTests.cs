@@ -455,5 +455,14 @@ public class EndTests
 
         waiter123.Set();
     }
+    [Fact]
+    public void InitTest()
+    {
+        SpaceshipApi Endpoint = new();
+
+        Endpoint.Init();
+
+        Assert.IsType<MyThread>(Hwdtech.IoC.Resolve<MyThread>("Get thread by id", "2"));
+    }
 }
 // Идея создать эндпоинт который будет регистроровать зависимости как для тестов и вызывать его до вызова команд с мессаджами
