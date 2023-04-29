@@ -9,6 +9,8 @@ using System.Runtime.Serialization;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
+using Newtonsoft;
+
 
 public class EndTests
 {
@@ -478,6 +480,7 @@ public class EndTests
         {
             var serobj = JsonSerializer.Serialize(dto);
             var jsonobj = JsonSerializer.Deserialize<JSONContract>(serobj);
+            Assert.IsType<JSONContract>(jsonobj);
         }
         catch (Exception ex)
         {
