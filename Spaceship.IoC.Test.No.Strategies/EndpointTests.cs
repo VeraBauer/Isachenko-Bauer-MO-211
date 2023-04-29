@@ -487,7 +487,12 @@ public class EndTests
         {
             var serobj = JsonSerializer.Serialize(dto);
             var jsonobj = JsonSerializer.Deserialize<JSONContract>(serobj);
+
+            var serobj2 = JsonSerializer.Serialize(jd);
+            var jsonobj2 = JsonSerializer.Deserialize<JsonDictionary>(serobj2);
+
             Assert.IsType<JSONContract>(jsonobj);
+            Assert.IsType<JsonDictionary>(jsonobj2);
         }
         catch (Exception ex)
         {
