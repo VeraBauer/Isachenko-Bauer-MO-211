@@ -8,7 +8,7 @@ fixes:
   - "./::"
   - "main/::"
   - "::/Spaceship__Server"
-  - "::/Isachenko-Bauer-MO-211/"
+  - "::/Isachenko-Bauer-MO-211"
   - "::/"
   - "::/main" 
 
