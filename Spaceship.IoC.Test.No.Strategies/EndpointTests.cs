@@ -488,7 +488,9 @@ public class EndTests
 
         StreamingContext sc = new();
 
-        JsonDictionary jd3 = new();
+        si.AddValue("type123", "Shoot");
+
+        JsonDictionary jd3 = new(ValueDictionary);
         
         dto.Value = jd;
 
