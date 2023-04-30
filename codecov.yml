@@ -6,6 +6,9 @@ fixes:
   - "Spaceship__Server/::"
   - "Isachenko-Bauer-MO-211/::"
   - "./::"
-  - "main/::" 
-
+  - "main/::"
+   - "::/Spaceship__Server"
+  - "::/Isachenko-Bauer-MO-211/"
+  - "::/"
+  - "::/main" 
 
