@@ -2,8 +2,3 @@ ignore:
   ["Spaceship.Macro.Test", "Spaceship.Exceptions.Test", "Spaceship.IoC.Test.No.Strategies"]
 codecov:
   token: ${{ secrets.CODECOV_TOKEN }}
-fixes:
-  - "::/Isachenko-Bauer-MO-211/Spaceship _Server/"
-  - "::/Isachenko-Bauer-MO-211/Spaceship _Server/Spaceship _Server/"
- 
-
