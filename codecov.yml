@@ -7,7 +7,7 @@ fixes:
   - "Isachenko-Bauer-MO-211/::"
   - "./::"
   - "main/::"
-   - "::/Spaceship__Server"
+  - "::/Spaceship__Server"
   - "::/Isachenko-Bauer-MO-211/"
   - "::/"
   - "::/main" 
