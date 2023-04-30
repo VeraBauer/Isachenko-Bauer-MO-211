@@ -479,6 +479,8 @@ public class EndTests
         JSONContract dto =  new();
 
         JsonDictionary jd = new(ValueDictionary);
+
+        JsonDictionary jd2 = new();
         
         dto.Value = jd;
 
@@ -490,6 +492,9 @@ public class EndTests
 
             var serobj2 = JsonSerializer.Serialize(jd);
             var jsonobj2 = JsonSerializer.Deserialize<JsonDictionary>(serobj2);
+
+            var serobj3 = JsonSerializer.Serialize(jd2);
+            var jsonobj3 = JsonSerializer.Deserialize<JsonDictionary>(serobj3);
 
             Assert.IsType<JSONContract>(jsonobj);
             Assert.IsType<JsonDictionary>(jsonobj2);
