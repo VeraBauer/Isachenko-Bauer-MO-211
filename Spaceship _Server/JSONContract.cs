@@ -29,7 +29,7 @@ namespace Spaceship__Server
             {
             get { return m_entries; }
             }
-        protected JsonDictionary(SerializationInfo info, StreamingContext context)
+        public JsonDictionary(SerializationInfo info, StreamingContext context)
             {
             m_entries = new Dictionary<string, object>();
             foreach (var entry in info)

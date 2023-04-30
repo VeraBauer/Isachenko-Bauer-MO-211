@@ -481,12 +481,24 @@ public class EndTests
         JsonDictionary jd = new(ValueDictionary);
 
         JsonDictionary jd2 = new();
+
+        FormatterConverter fc = new();
+
+        SerializationInfo si = new(typeof(JsonDictionary), fc);
+
+        StreamingContext sc = new();
+
+        JsonDictionary jd3 = new();
         
         dto.Value = jd;
 
         MemoryStream mem = new MemoryStream();
         try
-        {
+        {   
+
+            jd3.GetObjectData(si, sc);
+            JsonDictionary jd4 = new(si, sc);
+
             var serobj = JsonSerializer.Serialize(dto);
             var jsonobj = JsonSerializer.Deserialize<JSONContract>(serobj);
 
@@ -498,6 +510,8 @@ public class EndTests
 
             Assert.IsType<JSONContract>(jsonobj);
             Assert.IsType<JsonDictionary>(jsonobj2);
+            Assert.IsType<JsonDictionary>(jsonobj3);
+
         }
         catch (Exception ex)
         {
