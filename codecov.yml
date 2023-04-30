@@ -3,12 +3,6 @@ ignore:
 codecov:
   token: ${{ secrets.CODECOV_TOKEN }}
 fixes:
-  - "Spaceship__Server/::"
-  - "Isachenko-Bauer-MO-211/::"
-  - "./::"
-  - "main/::"
-  - "::/Spaceship__Server"
   - "::/Isachenko-Bauer-MO-211"
-  - "::/"
-  - "::/main" 
+ 
 
