@@ -3,6 +3,6 @@ ignore:
 codecov:
   token: ${{ secrets.CODECOV_TOKEN }}
 fixes:
-  - "./"
+  - "Spaceship__Server/::"
 
 
