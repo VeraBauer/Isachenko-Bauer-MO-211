@@ -21,9 +21,11 @@ public class GameCommandTests
 
         Mock<Spaceship__Server.ICommand> mcmd = new();
 
+        mcmd.Setup(c => c.Execute()).Callback(() => {});
+
         Spaceship__Server.ICommand cmd = mcmd.Object;
 
-        Queue<Spaceship__Server.ICommand> queue = new();
+        Queue<Spaceship__Server.ICommand> queue = new(new[] {cmd, cmd, cmd});
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Exception.Source", (object[] args) => 
         {
