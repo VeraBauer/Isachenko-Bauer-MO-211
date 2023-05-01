@@ -105,5 +105,24 @@ public class GameCommandTests
         Assert.InRange<TimeSpan>(DateTime.Now.Subtract(begin), new TimeSpan(0, 0, 5), new TimeSpan(0, 0, 0, 5, 200));
     }
 
+    [Fact]
+    public void ScopeTest()
+    {
+        var scope = Init();
+
+        GameCommand Game = new(scope);
+
+        Assert.Equal(scope, Game.scope);
+    }
+
+    [Fact]
+    public void ExceptionThrowerTest()
+    {
+        Assert.Throws<NullReferenceException>(() => 
+        {
+            Hwdtech.IoC.Resolve<Spaceship__Server.ICommand>("Game.Current.HandleCommand").Execute();
+        });
+    }
+
 
 }
