@@ -11,6 +11,7 @@ public class GameCommand : Spaceship__Server.ICommand
     {
         this.scope = scope;
     }
+    
     public void Execute()
     {
         IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", this.scope).Execute();
