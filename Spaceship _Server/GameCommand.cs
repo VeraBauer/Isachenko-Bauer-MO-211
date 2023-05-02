@@ -12,6 +12,7 @@ public class GameCommand : Spaceship__Server.ICommand
     }
     public void Execute()
     {
+    
         IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", this.scope).Execute();
 
         DateTime begin = DateTime.Now;
