@@ -6,6 +6,7 @@ namespace Spaceship__Server;
 public class GameCommand : Spaceship__Server.ICommand
 {
     public object scope;
+    
     public GameCommand(object scope)
     {
         this.scope = scope;
