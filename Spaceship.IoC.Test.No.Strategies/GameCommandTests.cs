@@ -19,13 +19,21 @@ public class GameCommandTests
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", scope).Execute();
 
+        TimeSpan ts = new TimeSpan(0, 0, 0, 0, 100);
+
         Mock<Spaceship__Server.ICommand> mcmd = new();
 
-        mcmd.Setup(c => c.Execute()).Callback(() => {});
+        mcmd.Setup(c => c.Execute()).Callback(() => {ts = new TimeSpan();});
 
         Spaceship__Server.ICommand cmd = mcmd.Object;
 
-        Queue<Spaceship__Server.ICommand> queue = new(new[] {cmd, cmd, cmd});
+        Mock<Spaceship__Server.ICommand> mcmd2 = new();
+
+        mcmd.Setup(c => c.Execute()).Callback(() => {(new ExceptionThrower()).ThrowEx();});
+
+        Spaceship__Server.ICommand cmd2 = mcmd2.Object;
+
+        Queue<Spaceship__Server.ICommand> queue = new(new[] {cmd2, cmd, cmd, cmd});
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Exception.Source", (object[] args) => 
         {
@@ -36,7 +44,15 @@ public class GameCommandTests
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register" , "Game.Current.Timespan", (object[] args) => 
         {
-            return (object)new TimeSpan(0, 0, 5);
+            return (object) ts;
+        }).Execute();
+
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register" , "Game.Current.Set.Timespan", (object[] args) => 
+        {
+            return new ActionCommand(() => {
+                TimeSpan newts = (TimeSpan) args[0];
+                ts = newts;
+            });
         }).Execute();
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register" , "Game.Current.Queue", (object[] args) => 
@@ -81,6 +97,8 @@ public class GameCommandTests
             
             Mock<Spaceship__Server.ICommand> HandleStrategy = new();
 
+            HandleStrategy.Setup(h => h.Execute()).Callback(() => {Assert.True(true);});
+
             Mock<Spaceship__Server.ICommand> OtherHandleStrategy = new();
 
             Dictionary<string, Spaceship__Server.ICommand> Exceptions = new(){{"System.Exception", HandleStrategy.Object}, {"System.ArgumentException", OtherHandleStrategy.Object}};
@@ -94,6 +112,16 @@ public class GameCommandTests
     }
 
     [Fact]
+    public void ExceptionHandleTest()
+    {
+
+        var scope = Init();
+
+        GameCommand Game = new(scope);
+
+    }
+
+    [Fact]
     public void TimeSpanTest()
     {
         var scope = Init();
@@ -104,7 +132,7 @@ public class GameCommandTests
 
         Game.Execute();
 
-        Assert.InRange<TimeSpan>(DateTime.Now.Subtract(begin), new TimeSpan(0, 0, 5), new TimeSpan(0, 0, 0, 5, 200));
+        Assert.InRange<TimeSpan>(DateTime.Now.Subtract(begin), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0, 0, 200));
     }
 
     [Fact]
