@@ -139,6 +139,9 @@ public class GameCommandTests
         Game.Execute();
 
         Assert.InRange<TimeSpan>(timer.Elapsed, new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0, 0, 200));
+
+        Assert.Empty(Hwdtech.IoC.Resolve<Queue<Spaceship__Server.ICommand>>("Game.Current.Queue"));
+
     }
 
     [Fact]
