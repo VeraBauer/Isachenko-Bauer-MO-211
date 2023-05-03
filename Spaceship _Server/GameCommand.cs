@@ -23,7 +23,9 @@ public class GameCommand : Spaceship__Server.ICommand
         {
             try
             {
+            
                 Spaceship__Server.ICommand cmd = IoC.Resolve<Spaceship__Server.ICommand>("Game.Current.HandleCommand");
+                
                 if (cmd != null)
                 {
                     cmd.Execute();
