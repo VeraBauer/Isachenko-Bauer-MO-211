@@ -23,7 +23,7 @@ public class GameCommandTests
 
         Mock<Spaceship__Server.ICommand> mcmd = new();
 
-        mcmd.Setup(c => c.Execute()).Callback(() => {ts = new TimeSpan();});
+        mcmd.Setup(c => c.Execute()).Callback(() => {/*ts = new TimeSpan();*/});
 
         Spaceship__Server.ICommand cmd = mcmd.Object;
 
@@ -68,11 +68,15 @@ public class GameCommandTests
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "HandleException", (object [] args) => 
         {
-            var err = args[0].GetType();
+            var err = args[0];
             var command = args[1];
             Dictionary<string, Spaceship__Server.ICommand> subtree = new();
 
             Mock<Spaceship__Server.ICommand> defaultStrategy = new();
+
+            defaultStrategy.Setup(s => s.Execute()).Callback(() => {throw (System.Exception) err;});
+            
+            var errtype = err.GetType();
 
             Mock<Spaceship__Server.ICommand> mcmd = new();
 
@@ -83,7 +87,7 @@ public class GameCommandTests
 
             if(tree.TryGetValue(command.ToString()!, out subtree!))
             {
-                if(subtree.TryGetValue(err.ToString(), out cmd))
+                if(subtree.TryGetValue(errtype.ToString(), out cmd))
                 {
                     return cmd;
                 }
@@ -128,11 +132,13 @@ public class GameCommandTests
 
         GameCommand Game = new(scope);
 
-        DateTime begin = DateTime.Now;
+        Stopwatch timer = new();
+
+        timer.Start();
 
         Game.Execute();
 
-        Assert.InRange<TimeSpan>(DateTime.Now.Subtract(begin), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0, 0, 200));
+        Assert.InRange<TimeSpan>(timer.Elapsed, new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0, 0, 200));
     }
 
     [Fact]

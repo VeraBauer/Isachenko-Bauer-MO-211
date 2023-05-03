@@ -1,5 +1,6 @@
 using Hwdtech;
 using System;
+using System.Diagnostics;
 namespace Spaceship__Server;
 
 
@@ -14,9 +15,11 @@ public class GameCommand : Spaceship__Server.ICommand
     {
         IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", this.scope).Execute();
 
-        DateTime begin = DateTime.Now;
+        Stopwatch timer = new();
 
-        while(DateTime.Now.Subtract(begin) < IoC.Resolve<TimeSpan>("Game.Current.Timespan"))
+        timer.Start();
+
+        while(timer.Elapsed < IoC.Resolve<TimeSpan>("Game.Current.Timespan"))
         {
             try
             {
