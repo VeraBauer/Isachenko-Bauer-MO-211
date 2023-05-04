@@ -20,5 +20,6 @@ public class MacroCreator
         }
 
         return new MacroCommand((Queue<Spaceship__Server.ICommand>)obj.get_property("Queue"), jobs);
+        
     }
 }
