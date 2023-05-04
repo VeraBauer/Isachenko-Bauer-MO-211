@@ -41,9 +41,11 @@ public class GameCommandTests
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Exception.Source", (object[] args) => 
         {
+        
             Exception ex = (Exception)args[0];
             var a = (new StackTrace(ex).GetFrame(0)!.GetMethod()!.ReflectedType)!.FullName;
             return a;
+            
         }).Execute();
 
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get.Exception.Status", (object[] args) => 
