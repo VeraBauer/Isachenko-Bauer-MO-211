@@ -13,6 +13,8 @@ public class GameCommand : Spaceship__Server.ICommand
     }
     public void Execute()
     {
+        var parentscope = IoC.Resolve<object>("Scopes.Root");
+
         IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", this.scope).Execute();
 
         Stopwatch timer = new();
