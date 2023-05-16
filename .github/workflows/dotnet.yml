@@ -31,6 +31,6 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
-          token: a97d03cf-72ca-4373-a9f9-f29b3ba19e25
+          token: ${{ secrets.CODECOV_TOKEN }}
 
 
