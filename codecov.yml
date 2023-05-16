@@ -1,4 +1,4 @@
 ignore:
   ["Spaceship.Macro.Test", "Spaceship.Exceptions.Test"]
 codecov:
-  token: 7a9b139f-9c14-4b1f-83f6-b05f1d1ca39f
+  token: ${{ secrets.CODECOV_TOKEN }}
