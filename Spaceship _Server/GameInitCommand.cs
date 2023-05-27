@@ -20,7 +20,7 @@ public class GameInitCommand : Spaceship__Server.ICommand
             IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "Position", Hwdtech.IoC.Resolve<Vector>("SetupPositionWallByWall", i)).Execute();
             IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "Fuel", 100.0).Execute();
             IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "OwnerID", ((i%2) + 1).ToString()).Execute();
-            
+
             GameObjects.Add((i + 1).ToString(), (object)obj);
         }
 
