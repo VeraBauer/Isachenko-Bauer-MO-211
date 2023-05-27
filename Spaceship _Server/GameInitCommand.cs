@@ -16,9 +16,11 @@ public class GameInitCommand : Spaceship__Server.ICommand
         for (int i = 0; i < this.objamount ; i++)
         {
             Dictionary<string, object> obj = new();
-            obj.Add("Position", Hwdtech.IoC.Resolve<Vector>("SetupPositionWallByWall", i));
-            obj.Add("Fuel", 100);
-            obj.Add("OwnerID", ((i%2) + 1).ToString());
+
+            IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "Position", Hwdtech.IoC.Resolve<Vector>("SetupPositionWallByWall", i)).Execute();
+            IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "Fuel", 100.0).Execute();
+            IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "OwnerID", ((i%2) + 1).ToString()).Execute();
+            
             GameObjects.Add((i + 1).ToString(), (object)obj);
         }
 

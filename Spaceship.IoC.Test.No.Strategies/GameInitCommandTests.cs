@@ -34,6 +34,53 @@ public class GameInitCommandTests
             int i = (int) args[0];
             return new Vector((i - (i%2))*5, (i%2)*5);
         }).Execute();
+
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IUObject.Property.Set", (object[] args) => 
+        {
+            Dictionary<string, object> obj = (Dictionary<string, object>)args[0];
+            string propname = (string)args[1];
+            object value = (object)args[2];
+
+            return new ActionCommand(() => 
+            {
+                if (obj.ContainsKey(propname))
+                {
+                    obj[propname] = value;
+                }
+                else
+                {
+                    obj.Add(propname, value);
+                }
+            });
+        }).Execute();
+
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IUObject.Property.Get", (object[] args) => 
+        {
+            Dictionary<string, object> obj = (Dictionary<string, object>)args[0];
+            string propname = (string)args[1];
+            if (obj.ContainsKey(propname))
+            {
+                return obj[propname];
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }).Execute();
+
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "IUObject.Property.Delete", (object[] args) => 
+        {
+           Dictionary<string, object> obj = (Dictionary<string, object>)args[0];
+            string propname = (string)args[1];
+            return new ActionCommand(() => 
+            {
+                if (obj.ContainsKey(propname))
+                {
+                    obj.Remove(propname);
+                }
+            });
+        }).Execute();
+
     }
     [Fact]
     public void InitTest()
