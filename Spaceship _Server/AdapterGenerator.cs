@@ -13,7 +13,8 @@ public class AdapterGenerator
         foreach(PropertyInfo property in properties)
         {
             adapter += "\t public ";
-            adapter += property.PropertyType + " ";
+            adapter += property.PropertyType;
+            adapter += " ";
             adapter += property.Name;
             adapter += " {";
             foreach(MethodInfo method in property.GetAccessors())
