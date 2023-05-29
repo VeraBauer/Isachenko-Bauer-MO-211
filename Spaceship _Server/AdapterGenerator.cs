@@ -13,7 +13,7 @@ public class AdapterGenerator
         foreach(PropertyInfo property in properties)
         {
             adapter += "\t public ";
-            adapter += property.PropertyType;
+            adapter += property.PropertyType.Name;
             adapter += " ";
             adapter += property.Name;
             adapter += " {";
@@ -26,7 +26,7 @@ public class AdapterGenerator
         adapter += "\t public " + $"{type.Name}Adapter" + " (object obj)" + $"\n" + "\t {" + $"\n";
         foreach(PropertyInfo property in properties)
         {
-            adapter += "\t \t this." + property.Name + $" = Hwdtech.IoC.Resolve<{property.PropertyType}>(\"IUObject.Property.Get\", obj, \"{property.Name}\");" + $"\n";
+            adapter += "\t \t this." + property.Name + $" = Hwdtech.IoC.Resolve<{property.PropertyType.Name}>(\"IUObject.Property.Get\", obj, \"{property.Name}\");" + $"\n";
         }
         adapter += "\t }" + $"\n" + "}";
 
