@@ -1,5 +1,6 @@
 using Hwdtech;
 using System.Collections.Generic;
+using System;
 namespace Spaceship__Server;
 
 public class GameInitCommand : Spaceship__Server.ICommand
@@ -13,17 +14,19 @@ public class GameInitCommand : Spaceship__Server.ICommand
     {
         Dictionary<string, object> GameObjects = new();
 
-        for (int i = 0; i < this.objamount ; i++)
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Game.Current.AddObject", (object[] args) => 
         {
-            Dictionary<string, object> obj = new();
-
-            IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "Position", Hwdtech.IoC.Resolve<Vector>("SetupPositionWallByWall", i)).Execute();
-            IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "Fuel", 100.0).Execute();
-            IoC.Resolve<Spaceship__Server.ICommand>("IUObject.Property.Set", obj, "OwnerID", ((i%2) + 1).ToString()).Execute();
-
-            GameObjects.Add((i + 1).ToString(), (object)obj);
-        }
-
+            string id = (string)args[0];
+            object obj = (object)args[1];
+            return new ActionCommand(() => {
+                GameObjects.Add(id, obj);
+            });
+        }).Execute();
+        Console.WriteLine("initing");
+        IEnumerable<object> objects = Hwdtech.IoC.Resolve<IEnumerable<object>>("Game.Initialize.Objects", this.objamount);
+        Console.WriteLine("setuping");
+        Hwdtech.IoC.Resolve<ICommand>("Game.Objects.Setup", objects).Execute();
+        Console.WriteLine("done init");
         Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Game.Current.ObjById", (object[] args) => 
         {
             return GameObjects[(string)args[0]];
