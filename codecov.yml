@@ -1,4 +1,4 @@
 ignore:
-  ["Spaceship.Macro.Test", "Spaceship.Exceptions.Test"]
+  ["Spaceship.Macro.Test", "Spaceship.Exceptions.Test", "Spaceship.IoC.Test.No.Strategies"]
 codecov:
   token: ${{ secrets.CODECOV_TOKEN }}
