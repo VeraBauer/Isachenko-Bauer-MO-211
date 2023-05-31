@@ -3,9 +3,9 @@ name: .NET
 on:
   workflow_dispatch:
   push:
-    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, GameInitCommand  ]
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, GameInitCommand ]
   pull_request:
-    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, GameInitCommand  ]
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, GameInitCommand ]
 
 jobs:
   build:
@@ -32,6 +32,7 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
 
 
 
