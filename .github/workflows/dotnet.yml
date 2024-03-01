@@ -3,9 +3,9 @@ name: .NET
 on:
   workflow_dispatch:
   push:
-    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, GameInitCommand ]
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, GameInitCommand, InitializeNewGameUnitTetst ]
   pull_request:
-    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, GameInitCommand ]
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, GameInitCommand, InitializeNewGameUnitTetst ]
 
 jobs:
   build:
@@ -30,8 +30,6 @@ jobs:
       run: curl --data-binary @codecov.yml https://codecov.io/validate
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
-      with:
-          token: ${{ secrets.CODECOV_TOKEN }}
 
 
 
