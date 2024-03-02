@@ -1,5 +1,5 @@
 ignore:
-	- "Spaceship.Macro.Test"
+  - "Spaceship.Macro.Test"
   - "Spaceship.Exceptions.Test"
   - "Spaceship.IoC.Test.No.Strategies"
   - "**/StartMoveCommand.cs"
