@@ -1,5 +1,8 @@
 ignore:
-  ["Spaceship.Macro.Test", "Spaceship.Exceptions.Test", "Spaceship.IoC.Test.No.Strategies"]
+	- "Spaceship.Macro.Test"
+  - "Spaceship.Exceptions.Test"
+  - "Spaceship.IoC.Test.No.Strategies"
   - "**/StartMoveCommand.cs"
+  
 codecov:
   token: ${{ secrets.CODECOV_TOKEN }}
