@@ -333,7 +333,7 @@ public class Stateful
         Assert.True(thread2.stop);
     }
     
-    [Fact (Skip = "Bad test")]
+    [Fact]
     public void SoftAwaitTest()
     {
         var scope = Dependencies.Run();
@@ -357,7 +357,7 @@ public class Stateful
         Assert.True(thread.receiver.isEmpty());
     }
     
-    [Fact (Skip = "Bad test")]
+    [Fact]
     public void HardNonAwaitTest()
     {
         var scope = Dependencies.Run();

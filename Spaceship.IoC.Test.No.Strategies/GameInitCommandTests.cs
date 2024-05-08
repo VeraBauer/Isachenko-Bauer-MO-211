@@ -111,7 +111,7 @@ public class GameInitCommandTests
             
         }).Execute();
     }
-    [Fact (Skip = "Bad test")]
+    [Fact]
     public void InitTest()
     {
         RegisterDependency();
