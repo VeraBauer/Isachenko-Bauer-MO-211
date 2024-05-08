@@ -313,7 +313,7 @@ public class EndTests
 
         return scope;
     }
-    [Fact (Skip = "Bad test")]
+    [Fact]
     public void CreateMoveCommand()
     {
         var scope = Dependencies.Run();
@@ -350,7 +350,7 @@ public class EndTests
         Assert.Equal(new Vector(1, 1), (Vector)((IUObject)obj.get_property("Object")).get_property("Position"));
     }
 
-    [Fact (Skip = "Bad test")]
+    [Fact]
     public void CreateStopCommand()
     {
         var scope = Dependencies.Run();

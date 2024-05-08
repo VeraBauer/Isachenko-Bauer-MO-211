@@ -9,7 +9,7 @@ using System;
 
 public class ContiniousMovement
 {
-    [Fact (Skip = "Bad test")]
+    [Fact]
     public void MoveCommandContinious()
     {
         new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
