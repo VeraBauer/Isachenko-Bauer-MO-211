@@ -1,24 +1,22 @@
+namespace Spaceship.IoC.Test.No.Strategies;
 using Hwdtech;
+using Hwdtech.Ioc;
 using Spaceship__Server;
 using Moq;
 
-namespace Spaceship.IoC.Test.No.Strategies;
-
-using System;
-
+//Skip = "Bad test"
 
 public class ContiniousMovement
 {
-    [Fact (Skip = "Bad test")]
+    [Fact (Skip = "Bad test")] 
     public void MoveCommandContinious()
     {
-        new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
+        new InitScopeBasedIoCImplementationCommand().Execute();
 
-        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.MoveCommand", (object[] args) => 
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.IMovable", (object[] args) => 
         {
+            return new MovableAdapter(args);
 
-            MovableAdapter adp = new MovableAdapter(args);
-            return adp;
         }).Execute();
 
         Mock<IUObject> order = new();
@@ -42,5 +40,55 @@ public class ContiniousMovement
         cmd.Execute();
         
         Assert.Equal(2, _queue.Count);
+    }
+    [Fact]
+    public void GetSpeedTest()
+    {
+        new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
+
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", Hwdtech.IoC.Resolve<object>("Scopes.New", Hwdtech.IoC.Resolve<object>("Scopes.Root"))).Execute();
+
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.Movable", (object[] args) => 
+        {
+            MovableAdapter adp = new MovableAdapter(args);
+            return adp;
+        }).Execute();
+
+        Mock<IUObject> obj = new();
+
+        obj.Setup(o => o.get_property("Position")).Returns(new Vector(2));
+
+        obj.Setup(o => o.get_property("Velocity")).Returns(new Vector(1));
+
+        IMovable movable = Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.Movable", obj.Object);
+
+        Assert.Equal(movable.Speed, new Vector(1));
+    }
+    [Fact]
+    public void MacroExecutionSuccess()
+    {
+        new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();
+
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", Hwdtech.IoC.Resolve<object>("Scopes.New", Hwdtech.IoC.Resolve<object>("Scopes.Root"))).Execute();
+
+        Hwdtech.IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Adapters.IUObject.Movable", (object[] args) => 
+        {
+            MovableAdapter adp = new MovableAdapter(args);
+            return adp;
+        }).Execute();
+
+        Queue<Spaceship__Server.ICommand> _queue = new();
+
+        Mock<IUObject> obj = new();
+
+        obj.Setup(o => o.get_property("Position")).Returns(new Vector(2));
+
+        obj.Setup(o => o.get_property("Velocity")).Returns(new Vector(1));
+
+        IMovable movable = Hwdtech.IoC.Resolve<IMovable>("Adapters.IUObject.Movable", obj.Object);
+
+        new MacroCommand(_queue, new List<Spaceship__Server.ICommand>(){new MoveCommand(movable)}).Execute();
+
+        Assert.Single(_queue);
     }
 }
