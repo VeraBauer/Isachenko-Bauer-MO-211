@@ -10,7 +10,7 @@ public class GetIUObject : IStrategy
 	{
 		string objId = (string)args[0];
 
-		if (!IoC.Resolve<IDictionary<string, IUObject>>("Game.Get.UObjectsDictionary").TryGetValue(objId, out IUObject? obj))
+		if (!IoC.Resolve<IDictionary<string, IUObject>>("Game.Get.UObjectsDictionary").TryGetValue(objId, out IUObject obj))
         {
             throw new Exception();
         }
