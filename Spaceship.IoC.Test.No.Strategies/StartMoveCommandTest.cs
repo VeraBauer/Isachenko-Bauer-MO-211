@@ -6,7 +6,9 @@ using Moq;
 
 public class ContiniousMovement
 {
-    [Fact (Skip = "Bad test")] 
+
+    [Fact (Skip = "Bad test")]
+
     public void MoveCommandContinious()
     {
         new InitScopeBasedIoCImplementationCommand().Execute();
