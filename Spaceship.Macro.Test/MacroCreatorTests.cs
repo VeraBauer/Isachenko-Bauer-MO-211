@@ -7,7 +7,7 @@ namespace Spaceship.Macro.Test;
 
 public class MacroBuilderTest
 {
-    [Fact]
+    [Fact] //(Skip = "Bad test")
     public void InitialTest()
     {
         new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand().Execute();

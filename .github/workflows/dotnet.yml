@@ -3,9 +3,10 @@ name: .NET
 on:
   workflow_dispatch:
   push:
-    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, MessageInterpretation, InitializeNewGame, CreateGameStrategy ]
+
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, InterpretationMessage, InitializeNewGame, CreateGameStrategy ]
   pull_request:
-    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, MessageInterpretation, InitializeNewGame, CreateGameStrategy ]
+    branches: [ Spaceship_Move_Test, Spaceship_Rotate_Test, master, MacroBuilderSolid, EndMoveCommand, GameCommand, Stateful, Endpoint, AdapterGenerator, InterpretationMessage, InitializeNewGame, CreateGameStrategy ]
 
 jobs:
   build:
